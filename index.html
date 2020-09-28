@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OddsApp</title>
+    <!-- External Stylesheets - CDN -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" /> 
+</head>
+<body class="container">
+    <div>
+        <p>
+            <h1>
+
+            </h1>
+        </p>
+    </div>
+
+
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="logic.js"></script>
+    <script type="text/javascript">
+        // OddsAPI
+        let sport = "sport=americanfootball_ncaaf&";
+        let oddsKey = "?apiKey=1f0ba35c47c21e5fcc328fcb4fd96990&";
+        let region = "region=us&";
+        let oddsMarket = "mkt=h2h";
+        let oddsQueryURL = "https://api.the-odds-api.com/v3/odds/" + oddsKey + sport + region + oddsMarket;
+        // Performing our AJAX GET request
+        $.ajax({
+            url: oddsQueryURL,
+            method: "GET"
+      }).then(function(response){
+        console.log(response);
+        console.log(typeof response);
+        console.log(response.data);
+        // returns matchup
+        console.log(response.data[0].teams[0] + " @ " + response.data[0].teams[1]);
+        // return bookmaker namel may want to consider a loop of this array and match on "site_nice"
+        console.log(response.data[0].sites[0].site_nice);
+        // logs home team odds? 
+        console.log(response.data[0].sites[0].odds.h2h[0]);
+        let homeOdds = response.data[0].sites[0].odds.h2h[0];
+        // logs away team odds
+        console.log(response.data[0].sites[0].odds.h2h[1]);
+        let awayOdds = response.data[0].sites[0].odds.h2h[1];
+        // odds conversion form decimal to american odds 
+        function convertOdds() {
+            if (homeOdds >= 2) {
+                let amHomeOdds = (homeOdds - 1) * 100;
+                console.log(amHomeOdds);
+            } else {
+                let amHomeOdds = 100 / (1 - homeOdds);
+                console.log(amHomeOdds);
+            }
+            if (awayOdds >= 2) {
+                let amAwayOdds = (awayOdds - 1) * 100;
+                console.log(amAwayOdds);
+            } else {
+                let amAwayOdds = 100 / (1 - awayOdds);
+                console.log(amAwayOdds);
+            };
+        };
+        convertOdds();
+
+        // Date Conversion from google; several methods online we should look into
+        // can also return the odds in ISO format if it is easier to use
+        const unixTimestamp = response.data[0].commence_time;
+
+        const milliseconds = unixTimestamp * 1000;
+
+        const dateObject = new Date(milliseconds);
+
+        const humanDateFormat = dateObject.toLocaleString() //2019-12-9 10:30:15
+
+        dateObject.toLocaleString("en-US", {weekday: "long"}) // Monday
+        dateObject.toLocaleString("en-US", {month: "long"}) // December
+        dateObject.toLocaleString("en-US", {day: "numeric"}) // 9
+        dateObject.toLocaleString("en-US", {year: "numeric"}) // 2019
+        dateObject.toLocaleString("en-US", {hour: "numeric"}) // 10 AM
+        dateObject.toLocaleString("en-US", {minute: "numeric"}) // 30
+        dateObject.toLocaleString("en-US", {second: "numeric"}) // 15
+        dateObject.toLocaleString("en-US", {timeZoneName: "short"}) // 12/9/2019, 10:30:15 AM CST
+
+        console.log(humanDateFormat);
+
+        // twitter API
+
+      });
+
+    </script>
+
+</body>
+</html>
