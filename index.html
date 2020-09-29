@@ -7,104 +7,204 @@
     <!-- External Stylesheets - CDN -->
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
+      crossorigin="anonymous"
+      >
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
       crossorigin="anonymous"
-    />
+    >
     <link
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css" /> 
+    >
+
+    <link rel="stylesheet" href="assets/style.css"> 
 </head>
-<body class="container">
-    <div>
-        <p>
-            <h1>
+<body>
+    <div class="container-fluid">
+        <header role="header">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light row">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav w-100 ml-1">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="teamDropdownMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                MLB Teams
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="TeamDropdownMenu">
+                                    <a class="dropdown-item border" href="#">Arizona Diamondbacks</a>
+                                    <a class="dropdown-item border" href="#">Atlanta Braves</a>
+                                    <a class="dropdown-item border" href="#">Baltimore Orioles</a>
+                                    <a class="dropdown-item border" href="#">Boston Red Sox</a>
+                                    <a class="dropdown-item border" href="#">Chicago White Sox</a>
+                                    <a class="dropdown-item border" href="#">Chicago Cubs</a>
+                                    <a class="dropdown-item border" href="#">Cincinnati Reds</a>
+                                    <a class="dropdown-item border" href="#">Cleveland Indians</a>
+                                    <a class="dropdown-item border" href="#">Colorado Rockies</a>
+                                    <a class="dropdown-item border" href="#">Detroit Tigers</a>
+                                    <a class="dropdown-item border" href="#">Houston Astros</a>
+                                    <a class="dropdown-item border" href="#">Kansas City Royals</a>
+                                    <a class="dropdown-item border" href="#">Los Angeles Angels</a>
+                                    <a class="dropdown-item border" href="#">Los Angeles Dodgers</a>
+                                    <a class="dropdown-item border" href="#">Miami Marlins</a>
+                                    <a class="dropdown-item border" href="#">Milwaukee Brewers</a>
+                                    <a class="dropdown-item border" href="#">Minnesota Twins</a>
+                                    <a class="dropdown-item border" href="#">New York Yankees</a>
+                                    <a class="dropdown-item border" href="#">New York Mets</a>
+                                    <a class="dropdown-item border" href="#">Oakland Athletics</a>
+                                    <a class="dropdown-item border" href="#">Philadelphia Phillies</a>
+                                    <a class="dropdown-item border" href="#">Pittsburgh Pirates</a>
+                                    <a class="dropdown-item border" href="#">San Diego Padres</a>
+                                    <a class="dropdown-item border" href="#">San Francisco Giants</a>
+                                    <a class="dropdown-item border" href="#">Seattle Mariners</a>
+                                    <a class="dropdown-item border" href="#">St. Louis Cardinals</a>
+                                    <a class="dropdown-item border" href="#">Tampa Bay Rays</a>
+                                    <a class="dropdown-item border" href="#">Texas Rangers</a>
+                                    <a class="dropdown-item border" href="#">Toronto Blue Jays</a>
+                                    <a class="dropdown-item border" href="#">Washington Nationals</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+            </nav>
+        </header>
+        <!-- Do we need jumbotron? Here or can we just style this div with a class of "jumbotron? -->
+        <div id="jumbotron" class="container-fluid">
+                <div class="row">
+                    <button class="btn btn-light border col-sm-4" type="button" data-toggle="collapse" data-target="#WorldSeries" aria-expanded="false" aria-controls="collapse">
+                    World Series Odds 2020
+                    </button>
+                    <button class="btn btn-light border col-sm-4" type="button" data-toggle="collapse" data-target="#ALWinner" aria-expanded="false" aria-controls="collapse">
+                    AL Winner 2020
+                    </button> 
+                    <button class="btn btn-light border col-sm-4" type="button" data-toggle="collapse" data-target="#NLWinner" aria-expanded="false" aria-controls="collapse">
+                    NL Winner 2020
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="collapse col-12 text-center border" id="WorldSeries">
+                        World Series Odds
+                    </div>
+                    <div class="collapse col-12 text-center border" id="ALWinner">
+                        AL Winner Odds
+                    </div>
+                    <div class="collapse col-12 text-center border" id="NLWinner">
+                        NL Winner Odds
+                    </div>
+                </div>
+        </div>
 
-            </h1>
-        </p>
+        <div id="pre-game-card" class="container-fluid text-center my-4">
+            <div id="pre-game-home" class="row">
+                <div class="col-1 border">
+                    @
+                </div>
+                <div class="col-4 border">
+                    CLE Indians
+                </div>
+                <div class="col-6 border">
+                    7:10 PM ET
+                </div>
+                <div class="col-1 border">
+                    *
+                </div>
+            </div>
+            <div id="pre-game-away" class="row">
+                <div class="col-1 border">
+                    @
+                </div>
+                <div class="col-4 border">
+                    NY Yankees
+                </div>
+                <div class="col-6 border">
+                    Progressive Field, OH
+                </div>
+                <div class="col-1 border">
+                    *
+                </div>
+            </div>
+        </div>
+        <div id="live-score-card" class="container-fluid text-center my-4">
+            <div id="live-score-home" class="row">
+                <div class="col-1 border">
+                    @
+                </div>
+                <div class="col-4 border">
+                    CLE Indians
+                </div>
+                <div class="col-6 border">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-4 border">
+                                5
+                            </div>
+                            <div class="col-8 border">
+                                7th Inning
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1 border">
+                    *
+                </div>
+            </div>
+            <div id="live-score-away" class="row">
+                <div class="col-1 border">
+                    @
+                </div>
+                <div class="col-4 border">
+                    NY Yankees
+                </div>
+                <div class="col-6 border">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-4 border">
+                                1
+                            </div>
+                            <div class="col-8 border">
+                                TBD
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1 border">
+                    *
+                </div>
+            </div>
+        </div>
     </div>
-
-
-    
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="logic.js"></script>
-    <script type="text/javascript">
-        // OddsAPI
-        let sport = "sport=americanfootball_ncaaf&";
-        let oddsKey = "?apiKey=1f0ba35c47c21e5fcc328fcb4fd96990&";
-        let region = "region=us&";
-        let oddsMarket = "mkt=h2h";
-        let oddsQueryURL = "https://api.the-odds-api.com/v3/odds/" + oddsKey + sport + region + oddsMarket;
-        // Performing our AJAX GET request
-        $.ajax({
-            url: oddsQueryURL,
-            method: "GET"
-      }).then(function(response){
-        console.log(response);
-        console.log(typeof response);
-        console.log(response.data);
-        // returns matchup
-        console.log(response.data[0].teams[0] + " @ " + response.data[0].teams[1]);
-        // return bookmaker namel may want to consider a loop of this array and match on "site_nice"
-        console.log(response.data[0].sites[0].site_nice);
-        // logs home team odds? 
-        console.log(response.data[0].sites[0].odds.h2h[0]);
-        let homeOdds = response.data[0].sites[0].odds.h2h[0];
-        // logs away team odds
-        console.log(response.data[0].sites[0].odds.h2h[1]);
-        let awayOdds = response.data[0].sites[0].odds.h2h[1];
-        // odds conversion form decimal to american odds 
-        function convertOdds() {
-            if (homeOdds >= 2) {
-                let amHomeOdds = (homeOdds - 1) * 100;
-                console.log(amHomeOdds);
-            } else {
-                let amHomeOdds = 100 / (1 - homeOdds);
-                console.log(amHomeOdds);
-            }
-            if (awayOdds >= 2) {
-                let amAwayOdds = (awayOdds - 1) * 100;
-                console.log(amAwayOdds);
-            } else {
-                let amAwayOdds = 100 / (1 - awayOdds);
-                console.log(amAwayOdds);
-            };
-        };
-        convertOdds();
-
-        // Date Conversion from google; several methods online we should look into
-        // can also return the odds in ISO format if it is easier to use
-        const unixTimestamp = response.data[0].commence_time;
-
-        const milliseconds = unixTimestamp * 1000;
-
-        const dateObject = new Date(milliseconds);
-
-        const humanDateFormat = dateObject.toLocaleString() //2019-12-9 10:30:15
-
-        dateObject.toLocaleString("en-US", {weekday: "long"}) // Monday
-        dateObject.toLocaleString("en-US", {month: "long"}) // December
-        dateObject.toLocaleString("en-US", {day: "numeric"}) // 9
-        dateObject.toLocaleString("en-US", {year: "numeric"}) // 2019
-        dateObject.toLocaleString("en-US", {hour: "numeric"}) // 10 AM
-        dateObject.toLocaleString("en-US", {minute: "numeric"}) // 30
-        dateObject.toLocaleString("en-US", {second: "numeric"}) // 15
-        dateObject.toLocaleString("en-US", {timeZoneName: "short"}) // 12/9/2019, 10:30:15 AM CST
-
-        console.log(humanDateFormat);
-
-        // twitter API
-
-      });
-
-    </script>
-
+    <!-- <script src="assets/logic.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"
+  ></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"
+  ></script>
 </body>
 </html>
