@@ -4,10 +4,15 @@ $(document).ready(function() {
     
     // SportsData.io API - Endpoint URLs
     let bettingFuturesMarketURL = "https://api.sportsdata.io/v3/mlb/odds/json/BettingFuturesBySeason/2020POST?key=fae190a3b3c447529f443fead4937d4c"
-    // will need to dynamically generate this date
-    let gameDate                = "2020-09-29";
-    let gamesOddsbyDateURL      = "https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/" + gameDate + sportDataApiKey;
-    let scheduleURL             = "https://api.sportsdata.io/v3/mlb/scores/json/Games/2020POST?key=fae190a3b3c447529f443fead4937d4c"
+    // will need to dynamically generate the dates in the correct format
+    let gameDate                = "2020-09-30";
+    let gamesOddsByDateURL      = "https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/" + gameDate + sportDataApiKey;
+    let boxScoreDate            = "2020-SEP-30";
+    let boxScoresByDateURL      = "https://api.sportsdata.io/v3/mlb/stats/json/BoxScores/" + boxScoreDate + sportDataApiKey;
+    let teamsURL                = "https://api.sportsdata.io/v3/mlb/scores/json/teams" + sportDataApiKey
+    // do not think we will want to use the scheduleURL endpoint as this will retrieve more games than we would like to render on the page
+    // let scheduleURL             = "https://api.sportsdata.io/v3/mlb/scores/json/Games/2020POST?key=fae190a3b3c447529f443fead4937d4c"
+    let stadiumURL              = "https://api.sportsdata.io/v3/mlb/scores/json/Stadiums" + sportDataApiKey;
     let newsURL                 = "https://api.sportsdata.io/v3/mlb/scores/json/News?key=fae190a3b3c447529f443fead4937d4c"
     // SportsData.io API - Ajax Call - Populate World Series Odds
     let worldSeriesOddsArr = [];
@@ -15,8 +20,6 @@ $(document).ready(function() {
     let NLWinnerArr = [];
 
     $.ajax({
-        "async": true,
-        "crossDomain": true,
         "url": bettingFuturesMarketURL,
         "method": "GET"
     }).done(function (response) {
@@ -29,40 +32,51 @@ $(document).ready(function() {
 
         // Configure Array for World Series Odds at DraftKings sportsbook (Id=7)
         let draftKingsWSOddsArr  = [];
-        // Loop through Array for World Series Odds and push "line" to World Series Odds at DraftKings sportsbook Array
+        // Loop through Array for World Series Odds and push "line" to World Series Odds at DraftKings sportsbook Array (above)
         let tempArr = data.BettingMarkets[11].BettingOutcomes
-        tempArr.forEach(function(el) {
-            let sportsBook = el.SportsBook;
+        tempArr.forEach(function(tempEl) {
+            let sportsBook = tempEl.SportsBook;
             if (sportsBook.SportsbookID === 7) {
-                draftKingsWSOddsArr.push(el);
+                draftKingsWSOddsArr.push(tempEl);
             };
         });
-        // Looop through Array for Worlds Series Odds at DraftKings sportsbook and push teamName and odds to functional array
-        draftKingsWSOddsArr.forEach(function(el) {
+
+        // Loop through Array for Worlds Series Odds at DraftKings sportsbook and push teamName and odds to functional array
+        draftKingsWSOddsArr.forEach(function(dkWorldSeriesEl) {
             worldSeriesOddsArr.push({
-                teamName: el.Participant,
-                odds:     el.PayoutAmerican
+                teamName: dkWorldSeriesEl.Participant,
+                odds:     dkWorldSeriesEl.PayoutAmerican
             });
         });
-        // log to test results
-        console.log(worldSeriesOddsArr);
+
+        // Dynamically generate World Series Odds Drop-Down Screen
+        worldSeriesOddsArr.forEach(function(worldSeriesOddsEl) {
+        let teamName  = worldSeriesOddsEl.teamName;
+        let odds      = worldSeriesOddsEl.odds;
+        let listGroup = $("#worldSeriesWinner");
+        // Create list-item for teamName
+        let listItem  = $("<p>");
+        // Add classes to list-item
+        listItem.addClass("list-group-item d-flex justify-content-between align-items-center");
+        // Set text of list-item to teamName
+        listItem.text(teamName);
+        // Create list-item-span for odds
+        let listItemSpan = $("<span>");
+        // Add classes to list-item-spand
+        listItemSpan.addClass("badge badge-dark");
+        // Set text of list-item-span to odds
+        listItemSpan.text(odds); 
+        // Append listItem to listGroup and listSpan to listItem
+        listGroup.append(listItem.append(listItemSpan));
+        });
     });
 
-    // Dynamically generate World Series Odds Drop-Down Screen
-    worldSeriesOddsArr.forEach(function(el) {
-        let teamName  = el.teamName;
-        let odds      = el.odds;
-        let listGroup = $("#worldSeriesWinnerListGroup");
-        let listItem  = $("<li>");
-        listItem.text(teamName);
-        console.log(listItem);
-        listGroup.append(listItem);
-    });
+
 
 
 
 // SportsData.io API - Ajax Call - Populate Pre-Game Odds
-// SportsData.io API - Ajax Call - Populate Live Odds
+// SportsData.io API - Ajax Call - Populate Live Odds -     FROM THE IMPLEMENTATIONS GUIDE ON WEBSITE
     // Check for Pending Games
         // the game should have started (Game.DateTime < Now) or Status === InProgress
         // the game DOES NOT include one of statuses: (Game.Status not in ('Final', 'Postponed', 'Canceled'))
@@ -81,66 +95,174 @@ $(document).ready(function() {
     let scheduledArr  = [];
     let completedArr  = [];
 
-
+    // ajaxCall to gamesOddsByDateURL to sort games by game "status"; push in-progress games to global array inProgressArr, scheduled+ games to scheduledArr, and completed games to completedArr
+    // when pushing game to specified array, it will carry a few properties that should be rendered on the page after final ajaxCall 
     $.ajax({
-        "async": true,
-        "crossDomain": true,
-        "url": gamesOddsbyDateURL,
+        "url": gamesOddsByDateURL,
         "method": "GET"
     }).done(function (response) {
-        console.log(response);
-
-        response.forEach(function(el) {
-            if (el.Status === "InProgress") {
+        response.forEach(function(gameEl) {
+            if (gameEl.Status === "InProgress") {
                 inProgressArr.push({
-                    gameID:      el.GameId,
-                    home:        el.HomeTeamName,
-                    away:        el.AwayTeamName
+                    gameID:              gameEl.GameId,
+                    homeTeamName:        gameEl.HomeTeamName,
+                    homeTeamID:          gameEl.HomeTeamId,
+                    awayTeamName:        gameEl.AwayTeamName,
+                    awayTeamID:          gameEl.AwayTeamId
                 });
-            } else if (el.Status === "Scheduled" || "Postponed" || "Canceled" ) {
+            } else if (gameEl.Status === "Scheduled" || gameEl.Status === "Postponed" || gameEl.Status === "Canceled" ) {
                 scheduledArr.push({
-                    gameID:      el.GameId,
-                    home:        el.HomeTeamName,
-                    homeMLOdds:  el.PregameOdds[0].HomeMoneyLine,
-                    away:        el.AwayTeamName,
-                    awayMLOdds:  el.PregameOdds[0].AwayMoneyLine,
-                    overUnder:   el.PregameOdds[0].OverUnder,
-                    overOdds:    el.PregameOdds[0].OverPayout,
-                    underOdds:   el.PregameOdds[0].UnderPayout 
+                    gameID:              gameEl.GameId,
+                    homeTeamName:        gameEl.HomeTeamName,
+                    homeTeamID:          gameEl.HomeTeamId,
+                    homeMLOdds:          gameEl.PregameOdds[0].HomeMoneyLine,
+                    awayTeamName:        gameEl.AwayTeamName,
+                    awayTeamID:          gameEl.AwayTeamId,
+                    awayMLOdds:          gameEl.PregameOdds[0].AwayMoneyLine,
+                    overUnder:           gameEl.PregameOdds[0].OverUnder,
+                    overOdds:            gameEl.PregameOdds[0].OverPayout,
+                    underOdds:           gameEl.PregameOdds[0].UnderPayout 
                 });
             } else {
                 completedArr.push({
-                    gameID:      el.GameId,
-                    home:        el.HomeTeamName,
-                    homeFnScore: el.HomeTeamScore,
-                    away:        el.AwayTeamName,
-                    awayFnScore: el.AwayTeamScore
+                    gameID:              gameEl.GameId,
+                    homeTeamName:        gameEl.HomeTeamName,
+                    homeTeamID:          gameEl.HomeTeamId,
+                    homeFnScore:         gameEl.HomeTeamScore,
+                    awayTeamName:        gameEl.AwayTeamName,
+                    awayTeamID:          gameEl.AwayTeamId,
+                    awayFnScore:         gameEl.AwayTeamScore
+                    
                 });
             };
         });
+        
+        // ajaxCall to boxScoresByDateURL to get variety of data properties to add to either inProgressArr, scheduledArr, completedArr; match on gameID as defined in *Arr
+        $.ajax({
+        "url": boxScoresByDateURL,
+        "method": "GET"
+        }).done(function(response) {
+            response.forEach(function(boxScoreEl) {
+                let boxScoreGameID = boxScoreEl.Game.GameID;
+
+                inProgressArr.forEach(function(gameEl) {
+                    if (gameEl.gameID === boxScoreGameID) {
+                        gameEl.homeTeamRuns = boxScoreEl.Game.HomeTeamRuns,
+                        gameEl.awayTeamRuns = boxScoreEl.Game.AwayTeamRuns,
+                        gameEl.inning       = boxScoreEl.Game.InningDescription,
+                        gameEl.stadiumID    = boxScoreEl.Game.StadiumID,
+                        gameEl.channel      = boxScoreEl.Game.Channel
+                    };
+                });
+
+                scheduledArr.forEach(function(gameEl) {
+                    if (gameEl.gameID === boxScoreGameID) {
+                        gameEl.dateTime  = boxScoreEl.Game.DateTime,
+                        gameEl.stadiumID = boxScoreEl.Game.StadiumID,
+                        gameEl.channel   = boxScoreEl.Game.Channel
+                    };
+                });
+
+                completedArr.forEach(function(gameEl) {
+                    if (gameEl.gameID === boxScoreGameID) {
+                        gameEl.winningPitcher = boxScoreEl.Game.WinningPitcherID,
+                        gameEl.losingPitcher  = boxScoreEl.Game.LosingPitcherID
+                    };
+                });
+            });
+        });
+            // ajaxCall to teamsURL to GET Team logo link (svg) and add to either inProgressArr, scheduledArr, completedArr; match on homeTeamID and awayTeamID as defined in *Arr
+            $.ajax({
+                url: teamsURL,
+                method: "GET"
+            }).done(function(response) {
+                response.forEach(function(teamsEl) {
+                    let teamID = teamsEl.TeamID;
+
+                    inProgressArr.forEach(function(gameEl){
+                        if (gameEl.homeTeamID === teamID) {
+                            gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                        } else if (gameEl.awayTeamID === teamID) {
+                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                        };
+                    });
+
+                    scheduledArr.forEach(function(gameEl){
+                        if (gameEl.homeTeamID === teamID) {
+                            gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                        } else if (gameEl.awayTeamID === teamID) {
+                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                        };
+                    });
+
+                    completedArr.forEach(function(gameEl){
+                        if (gameEl.homeTeamID === teamID) {
+                            gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                        } else if (gameEl.awayTeamID === teamID) {
+                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                        };
+                    });
+                });
+            });
+
+
+            // ajaxCall to stadiumURL to GET Stadium properties and add to scheduledArr; match on stadiumID as defined it scheduledArr - - - not working for me
+            $.ajax({
+                "url": stadiumURL,
+                "method": "GET"
+                }).done(function(response) {
+                    response.forEach(function(stadiumEl) {
+                        let stadiumStID = stadiumEl.StadiumID;
+
+                        inProgressArr.forEach(function(gameEl) {
+                            console.log(gameEl);
+                            // console.log(gameEl.stadiumID); returns undefined even though it is present in the gameEl on line 218 (line above) and thus "if conditional" is not firing 
+                            console.log(stadiumStID);
+                            if (gameEl.stadiumID === stadiumStID) {
+                                gameEl.stadiumName  = stadiumEl.Name,
+                                gameEl.stadiumCity  = stadiumEl.City,
+                                gameEl.stadiumState = stadiumEl.State 
+                            };
+                        });
+
+                        scheduledArr.forEach(function(gameEl) {
+                            console.log(gameEl);
+                            console.log(gameEl.stadiumID);  
+                            console.log(stadiumStID);
+                            if (gameEl.stadiumID === stadiumStID) {
+                                gameEl.stadiumName  = stadiumEl.Name,
+                                gameEl.stadiumCity  = stadiumEl.City,
+                                gameEl.stadiumState = stadiumEl.State 
+                            };
+                        });
+
+                    });
+                });
+
+    });
+
         console.log(inProgressArr);
         console.log(scheduledArr);
         console.log(completedArr);
-    });
+
+    
+    // after returning the above data and subsequent data manipulation / configuration, we will need
+    // to deconstructe the arrays and pass in each GameID into the BoxScore API for following... 
+        // 1. In-Progress Data Points
+            // a. InningDescription
+            // b. HomeTeamRuns
+            // c. AwayTeamRuns
+            // d. Channel
+        // 2. Scheduled Data Points 
+            // a. DateTime
+            // b. StadiumID ?? 
+        // 3. Completed Data Points 
+            // a. 
+
 
 
 
 });
-
-
-
-
-
-// WorldSeries Odds selection works outside of forEach function
-// let listGroup = $('#worldSeriesWinnerListGroup');
-// console.log(listGroup);
-// let listItem = $("<li>");
-// listItem.text("Pirates");
-// listItem.addClass("list-group-item d-flex justify-content-between align-items-center");
-// let listItemSpan = $("<span>");
-// listItemSpan.text("200");
-// listItemSpan.addClass("badge badge-dark");
-// listGroup.append(listItem.append(listItemSpan));
 
 
 
