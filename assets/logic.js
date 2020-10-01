@@ -6,14 +6,16 @@ $(document).ready(function() {
     let bettingFuturesMarketURL = "https://api.sportsdata.io/v3/mlb/odds/json/BettingFuturesBySeason/2020POST?key=fae190a3b3c447529f443fead4937d4c"
     // will need to dynamically generate the dates in the correct format
     let gameDate                = "2020-09-30";
-    let gamesOddsByDateURL      = "https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/" + gameDate + sportDataApiKey;
     let boxScoreDate            = "2020-SEP-30";
+    let LiveGameOddsDate        = "2020-09-30";
+    let playerDate              = "2020-SEP-30";
+    let gamesOddsByDateURL      = "https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/" + gameDate + sportDataApiKey;
     let boxScoresByDateURL      = "https://api.sportsdata.io/v3/mlb/stats/json/BoxScores/" + boxScoreDate + sportDataApiKey;
-    let teamsURL                = "https://api.sportsdata.io/v3/mlb/scores/json/teams" + sportDataApiKey
+    let teamsURL                = "https://api.sportsdata.io/v3/mlb/scores/json/teams" + sportDataApiKey;
+    let playerStatsByDate       = "https://api.sportsdata.io/v3/mlb/stats/json/PlayerGameStatsByDate/" + playerDate + sportDataApiKey
     let stadiumURL              = "https://api.sportsdata.io/v3/mlb/scores/json/Stadiums" + sportDataApiKey;
-    let LiveGameOddsDate        = "2020-09-30"
-    let liveGameOddsURL         = "https://api.sportsdata.io/v3/mlb/odds/json/LiveGameOddsByDate/" + LiveGameOddsDate + sportDataApiKey
-    let newsURL                 = "https://api.sportsdata.io/v3/mlb/scores/json/News?key=fae190a3b3c447529f443fead4937d4c"
+    let liveGameOddsURL         = "https://api.sportsdata.io/v3/mlb/odds/json/LiveGameOddsByDate/" + LiveGameOddsDate + sportDataApiKey;
+    let newsURL                 = "https://api.sportsdata.io/v3/mlb/scores/json/News" + sportDataApiKey;
     
     // SportsData.io API - Ajax Call - Populate Futures Odds
     let worldSeriesOddsArr = [];
@@ -176,29 +178,6 @@ $(document).ready(function() {
         });
     });
 
-
-
-
-
-
-
-// SportsData.io API - Ajax Call - Populate Pre-Game Odds
-// SportsData.io API - Ajax Call - Populate Live Odds -     
-// ======================================================  FROM THE IMPLEMENTATIONS GUIDE ON WEBSITE  ====================================================== 
-    // Check for Pending Games
-        // the game should have started (Game.DateTime < Now) or Status === InProgress
-        // the game DOES NOT include one of statuses: (Game.Status not in ('Final', 'Postponed', 'Canceled'))
-    // If any games are pending 
-        // if there any pending games, then continue, otherwise, quit
-    // Box Scores 
-        // If any games match the criteria, you'll want to pull the latest data for each game. You can do this one of two ways.
-            // Using distinct days from games that are pending, pull the latest box score data by date (API Call: Box Scores by Date)
-            // Loop the pending games and pull the latest box score data by GameID (API Call: Box Score)
-    // Delta Box Scores 
-        // One more important note, instead of using the full box score data, you can use the delta box scores instead. 
-        // This will allow you to get even faster real time integration, since you will only receive player stats that 
-        // have changed in the last X minutes. (more information on the Box Scores by Date Delta APIs below)
-
     let inProgressArr = [];
     let scheduledArr  = [];
     let completedArr  = [];
@@ -275,8 +254,8 @@ $(document).ready(function() {
 
                 completedArr.forEach(function(gameEl) {
                     if (gameEl.gameID === boxScoreGameID) {
-                        gameEl.winningPitcher = boxScoreEl.Game.WinningPitcherID,
-                        gameEl.losingPitcher  = boxScoreEl.Game.LosingPitcherID
+                        gameEl.winningPitcherID = boxScoreEl.Game.WinningPitcherID,
+                        gameEl.losingPitcherID  = boxScoreEl.Game.LosingPitcherID
                     };
                 });
             });
@@ -316,63 +295,84 @@ $(document).ready(function() {
                 });
             });
 
-            // ajaxCall to stadiumURL to GET Stadium properties and add to scheduledArr; match on stadiumID as defined it scheduledArr - - - not working for me
-            $.ajax({
-                "async": false,
-                "url": stadiumURL,
-                "method": "GET"
-                }).done(function(response) {
-                    response.forEach(function(stadiumEl) {
-                        let stadiumStID = stadiumEl.StadiumID;
+                // ajaxCall to stadiumURL to GET Stadium properties and add to scheduledArr; match on stadiumID as defined it scheduledArr - - - not working for me
+                $.ajax({
+                    "async": false,
+                    "url": stadiumURL,
+                    "method": "GET"
+                    }).done(function(response) {
+                        response.forEach(function(stadiumEl) {
+                            let stadiumStID = stadiumEl.StadiumID;
 
-                        inProgressArr.forEach(function(gameEl) {
-                            if (gameEl.stadiumID === stadiumStID) {
-                                gameEl.stadiumName  = stadiumEl.Name,
-                                gameEl.stadiumCity  = stadiumEl.City,
-                                gameEl.stadiumState = stadiumEl.State 
-                            };
+                            inProgressArr.forEach(function(gameEl) {
+                                if (gameEl.stadiumID === stadiumStID) {
+                                    gameEl.stadiumName  = stadiumEl.Name,
+                                    gameEl.stadiumCity  = stadiumEl.City,
+                                    gameEl.stadiumState = stadiumEl.State 
+                                };
+                            });
+
+                            scheduledArr.forEach(function(gameEl) {
+
+                                if (gameEl.stadiumID === stadiumStID) {
+                                    gameEl.stadiumName  = stadiumEl.Name,
+                                    gameEl.stadiumCity  = stadiumEl.City,
+                                    gameEl.stadiumState = stadiumEl.State 
+                                };
+                            });
+
                         });
-
-                        scheduledArr.forEach(function(gameEl) {
-
-                            if (gameEl.stadiumID === stadiumStID) {
-                                gameEl.stadiumName  = stadiumEl.Name,
-                                gameEl.stadiumCity  = stadiumEl.City,
-                                gameEl.stadiumState = stadiumEl.State 
-                            };
-                        });
-
                     });
-                });
 
-            // ajaxCall to liveGameOddsURL to get Live Odds for the games that are inProgress (inProgressArr)
-            $.ajax({
-                "async": false,
-                "url": liveGameOddsURL,
-                "method": "GET"
-                }).done(function(response) {
-                    response.forEach(function(liveGameEl) {
-                        let liveGameGameID = liveGameEl.GameId;
+                    // ajaxCall to liveGameOddsURL to get Live Odds for the games that are inProgress (inProgressArr)
+                    $.ajax({
+                        "async": false,
+                        "url": liveGameOddsURL,
+                        "method": "GET"
+                        }).done(function(response) {
+                            response.forEach(function(liveGameEl) {
+                                let liveGameGameID = liveGameEl.GameId;
 
-                        inProgressArr.forEach(function(gameEl) {
-                            if (gameEl.gameID === liveGameGameID) {
-                                gameEl.liveHomeMoneyLine = liveGameEl.LiveOdds[0].HomeMoneyLine,
-                                gameEl.liveAwayMoneyLine = liveGameEl.LiveOdds[0].AwayMoneyLine,
-                                gameEl.homePointSpread   = liveGameEl.LiveOdds[0].HomePointSpread,
-                                gameEl.awayPointSpread   = liveGameEl.LiveOdds[0].AwayPointSpread,
-                                gameEl.homePointSpreadPayout = liveGameEl.LiveOdds[0].HomePointSpreadPayout,
-                                gameEl.awayPointSpreadPayout = liveGameEl.LiveOdds[0].AwayPointSpreadPayout
-                            };
+                                inProgressArr.forEach(function(gameEl) {
+                                    if (gameEl.gameID === liveGameGameID) {
+                                        gameEl.liveHomeMoneyLine     = liveGameEl.LiveOdds[0].HomeMoneyLine,
+                                        gameEl.liveAwayMoneyLine     = liveGameEl.LiveOdds[0].AwayMoneyLine,
+                                        gameEl.homePointSpread       = liveGameEl.LiveOdds[0].HomePointSpread,
+                                        gameEl.awayPointSpread       = liveGameEl.LiveOdds[0].AwayPointSpread,
+                                        gameEl.homePointSpreadPayout = liveGameEl.LiveOdds[0].HomePointSpreadPayout,
+                                        gameEl.awayPointSpreadPayout = liveGameEl.LiveOdds[0].AwayPointSpreadPayout
+                                    };
+                                });
+
+                            });
                         });
 
-                    });
-                });
-
+                        // ajaxCall to playerStatsByDate to get pitcher name of winner&losing pitcher of completedArr 
+                        $.ajax({
+                            "async": false,
+                            "url": playerStatsByDate,
+                            "method": "GET"
+                            }).done(function(response) {
+                                response.forEach(function(playerEl) {
+                                    let playerID = playerEl.PlayerID;
+                                    
+                                    completedArr.forEach(function(gameEl) {
+                                        if (gameEl.winningPitcherID === playerID) {
+                                            gameEl.winningPitcherName = playerEl.Name
+                                        };
+                                        if (gameEl.losingPitcherID === playerID) {
+                                            gameEl.losingPitcherName = playerEl.Name
+                                        };
+                                    });
+                                });
+                            });
     });
 
-        console.log(inProgressArr);
-        console.log(scheduledArr);
-        console.log(completedArr);
+
+    console.log(inProgressArr);
+    console.log(scheduledArr);
+    console.log(completedArr);
+
 
 });
 
