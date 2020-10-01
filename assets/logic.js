@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // SportsData.io API Key 
-    let sportDataApiKey = "?key=fae190a3b3c447529f443fead4937d4c";
+    let sportDataApiKey         = "?key=fae190a3b3c447529f443fead4937d4c";
     
     // SportsData.io API - Endpoint URLs
     let bettingFuturesMarketURL = "https://api.sportsdata.io/v3/mlb/odds/json/BettingFuturesBySeason/2020POST?key=fae190a3b3c447529f443fead4937d4c"
@@ -19,10 +19,10 @@ $(document).ready(function() {
     
     // SportsData.io API - Ajax Call - Populate Futures Odds
     let worldSeriesOddsArr = [];
-    let ALWinnerArr = [];
-    let NLWinnerArr = [];
+    let ALWinnerArr        = [];
+    let NLWinnerArr        = [];
 
-    // ajaxCall to bettingFuturesMarketURL to retrieve World Series 2020 Odss by Team and append them dynamically to the page
+    // ajaxCall to bettingFuturesMarketURL to retrieve World Series 2020 Odds by Team and append them dynamically to the page
     $.ajax({
         "url": bettingFuturesMarketURL,
         "method": "GET"
@@ -128,7 +128,7 @@ $(document).ready(function() {
         });
     });
 
-    // ajaxCall to bettingFuturesMarketURL to retrieve AL Winner Odds by Team and append them dynamically to the page
+    // ajaxCall to bettingFuturesMarketURL to retrieve NL Winner Odds by Team and append them dynamically to the page
     $.ajax({
         "url": bettingFuturesMarketURL,
         "method": "GET"
@@ -156,8 +156,9 @@ $(document).ready(function() {
                 odds:     dkNtLgEl.PayoutAmerican
             });
         });
+
         // Dynamically generate National League Odds "Drop-Down Screen" - List Group
-        NLWinnerOddsArr.forEach(function(dkNtLgEl) {
+        NLWinnerArr.forEach(function(dkNtLgEl) {
         let teamName  = dkNtLgEl.teamName;
         let NLodds    = dkNtLgEl.odds;
         let listGroup = $("#NLWinnerOdds");
@@ -178,7 +179,44 @@ $(document).ready(function() {
         });
     });
 
+    // ajaxCall to populate MLB news feed - scrollspy configured 
+    let newsArr = [];
+    $.ajax({
+        "url": newsURL,
+        "method": "GET"
+    }).done(function (response) {
+        for (i = 0; i < 5; i++) {
+            newsArr.push({
+                headline: response[i].Title,
+                story:    response[i].Content,
+                link:     response[i].Url
+            });
+        };
+        console.log(newsArr);
+        // Dynamically update News Feed - List Group
+        newsArr.forEach(function(newsEl, i) {
+            let contentID  = "#" + "content-" + [i];
+            let contentEl  = $(contentID);
+            let headlineEl = $("<h5>");
+            headlineEl.addClass("text-secondary mb-1");
+            headlineEl.text(newsEl.headline);
+            headlineEl.insertAfter(contentEl);
+            let storyEl    = $("<p>");
+            storyEl.text(newsEl.story);
+            storyEl.insertAfter(headlineEl);
+            let buttonEl   = $("<a>");
+            buttonEl.text("Continue");
+            buttonEl.addClass("btn btn-outline-dark btn-sm mb-3");
+            buttonEl.attr("href", newsEl.link);
+            buttonEl.attr("role", "button");
+            buttonEl.insertAfter(storyEl);
+        });
+    });
+
+
+
     let inProgressArr = [];
+    // map out example of final "product" (object with key-value pairs) here =======================
     let scheduledArr  = [];
     let completedArr  = [];
 
