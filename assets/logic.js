@@ -179,12 +179,14 @@ $(document).ready(function() {
         });
     });
 
-    // ajaxCall to populate MLB news feed - scrollspy configured 
+    // create empty array to hold news objects (elements) from the SportsData.io newsURL endpoint
     let newsArr = [];
+    // ajaxCall to Sportsdata.io newsURL endpoint to populate MLB news feed - scrollspy configured 
     $.ajax({
         "url": newsURL,
         "method": "GET"
     }).done(function (response) {
+        // loop to push news objects to newsArr for the last five days
         for (i = 0; i < 5; i++) {
             newsArr.push({
                 headline: response[i].Title,
@@ -195,20 +197,35 @@ $(document).ready(function() {
         console.log(newsArr);
         // Dynamically update News Feed - List Group
         newsArr.forEach(function(newsEl, i) {
+            // generate ID to be used as a selector
             let contentID  = "#" + "content-" + [i];
+            // select correct scrollspy item
             let contentEl  = $(contentID);
+            // generate h5 tag
             let headlineEl = $("<h5>");
+            // add classes to h5 tag
             headlineEl.addClass("text-secondary mb-1");
+            // set h5 tag text to headline property in looping newsElement
             headlineEl.text(newsEl.headline);
+            // insert h5 after contentEl 
             headlineEl.insertAfter(contentEl);
+            // generate p tag
             let storyEl    = $("<p>");
+            // set p tag text to story property in looping newsElement
             storyEl.text(newsEl.story);
+            // insert p tag after headlineEl
             storyEl.insertAfter(headlineEl);
+            // generate a tag
             let buttonEl   = $("<a>");
-            buttonEl.text("Continue");
+            // add classes to a tag
             buttonEl.addClass("btn btn-outline-dark btn-sm mb-3");
+            // set a tag text 
+            buttonEl.text("Continue");
+            // set href attr of a tag to link property in looping newsElement
             buttonEl.attr("href", newsEl.link);
+            // set role attr of a tag to "button" in looping newsElement
             buttonEl.attr("role", "button");
+            // insert a tag after storyEl
             buttonEl.insertAfter(storyEl);
         });
     });
