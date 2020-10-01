@@ -10,15 +10,17 @@ $(document).ready(function() {
     let boxScoreDate            = "2020-SEP-30";
     let boxScoresByDateURL      = "https://api.sportsdata.io/v3/mlb/stats/json/BoxScores/" + boxScoreDate + sportDataApiKey;
     let teamsURL                = "https://api.sportsdata.io/v3/mlb/scores/json/teams" + sportDataApiKey
-    // do not think we will want to use the scheduleURL endpoint as this will retrieve more games than we would like to render on the page
-    // let scheduleURL             = "https://api.sportsdata.io/v3/mlb/scores/json/Games/2020POST?key=fae190a3b3c447529f443fead4937d4c"
     let stadiumURL              = "https://api.sportsdata.io/v3/mlb/scores/json/Stadiums" + sportDataApiKey;
+    let LiveGameOddsDate        = "2020-09-30"
+    let liveGameOddsURL         = "https://api.sportsdata.io/v3/mlb/odds/json/LiveGameOddsByDate/" + LiveGameOddsDate + sportDataApiKey
     let newsURL                 = "https://api.sportsdata.io/v3/mlb/scores/json/News?key=fae190a3b3c447529f443fead4937d4c"
-    // SportsData.io API - Ajax Call - Populate World Series Odds
+    
+    // SportsData.io API - Ajax Call - Populate Futures Odds
     let worldSeriesOddsArr = [];
     let ALWinnerArr = [];
     let NLWinnerArr = [];
 
+    // ajaxCall to bettingFuturesMarketURL to retrieve World Series 2020 Odss by Team and append them dynamically to the page
     $.ajax({
         "url": bettingFuturesMarketURL,
         "method": "GET"
@@ -33,7 +35,7 @@ $(document).ready(function() {
         // Configure Array for World Series Odds at DraftKings sportsbook (Id=7)
         let draftKingsWSOddsArr  = [];
         // Loop through Array for World Series Odds and push "line" to World Series Odds at DraftKings sportsbook Array (above)
-        let tempArr = data.BettingMarkets[11].BettingOutcomes
+        let tempArr = data.BettingMarkets[11].BettingOutcomes;
         tempArr.forEach(function(tempEl) {
             let sportsBook = tempEl.SportsBook;
             if (sportsBook.SportsbookID === 7) {
@@ -49,10 +51,10 @@ $(document).ready(function() {
             });
         });
 
-        // Dynamically generate World Series Odds Drop-Down Screen
+        // Dynamically generate World Series Odds "Drop-Down Screen" - List Group
         worldSeriesOddsArr.forEach(function(worldSeriesOddsEl) {
         let teamName  = worldSeriesOddsEl.teamName;
-        let odds      = worldSeriesOddsEl.odds;
+        let WSodds    = worldSeriesOddsEl.odds;
         let listGroup = $("#worldSeriesWinner");
         // Create list-item for teamName
         let listItem  = $("<p>");
@@ -65,7 +67,110 @@ $(document).ready(function() {
         // Add classes to list-item-spand
         listItemSpan.addClass("badge badge-dark");
         // Set text of list-item-span to odds
-        listItemSpan.text(odds); 
+        listItemSpan.text(WSodds); 
+        // Append listItem to listGroup and listSpan to listItem
+        listGroup.append(listItem.append(listItemSpan));
+        });
+    });
+
+    // ajaxCall to bettingFuturesMarketURL to retrieve AL Winner Odds by Team and append them dynamically to the page
+    $.ajax({
+        "url": bettingFuturesMarketURL,
+        "method": "GET"
+    }).done(function (response) {
+        // Declare Data Response 
+        let data = response[0];
+        // Name of Betting Market Type and As Of Date - Can be placed on #ALWinnerOdds
+        let ALWinner     = data.BettingMarkets[15].BettingBetType;
+        let ALWinnerTime = data.BettingMarkets[15].Updated;
+        $("#ALWinnerOdds").text(ALWinner + " as of " + ALWinnerTime);
+
+        // Configure Array for American League Odds at DraftKings sportsbook (Id=7)
+        let draftKingsAmLgOddsArr  = [];
+        // Loop through Array for American League Odds and push "line" to American League Odds at DraftKings sportsbook Array (above)
+        let tempArr = data.BettingMarkets[15].BettingOutcomes;
+        tempArr.forEach(function(tempEl) {
+            let sportsBook = tempEl.SportsBook;
+            if (sportsBook.SportsbookID === 7) {
+                draftKingsAmLgOddsArr.push(tempEl);
+            };
+        });
+
+        // Loop through Array for American League Odds at DraftKings sportsbook and push teamName and odds to functional array
+        draftKingsAmLgOddsArr.forEach(function(dkAmLgEl) {
+            ALWinnerArr.push({
+                teamName: dkAmLgEl.Participant,
+                odds:     dkAmLgEl.PayoutAmerican
+            });
+        });
+
+        // Dynamically generate American League Odds "Drop-Down Screen" - List Group
+        ALWinnerArr.forEach(function(AmLgOddsEl) {
+        let teamName  = AmLgOddsEl.teamName;
+        let ALodds    = AmLgOddsEl.odds;
+        let listGroup = $("#ALWinnerOdds");
+        // Create list-item for teamName
+        let listItem  = $("<p>");
+        // Add classes to list-item
+        listItem.addClass("list-group-item d-flex justify-content-between align-items-center");
+        // Set text of list-item to teamName
+        listItem.text(teamName);
+        // Create list-item-span for odds
+        let listItemSpan = $("<span>");
+        // Add classes to list-item-spand
+        listItemSpan.addClass("badge badge-dark");
+        // Set text of list-item-span to odds
+        listItemSpan.text(ALodds); 
+        // Append listItem to listGroup and listSpan to listItem
+        listGroup.append(listItem.append(listItemSpan));
+        });
+    });
+
+    // ajaxCall to bettingFuturesMarketURL to retrieve AL Winner Odds by Team and append them dynamically to the page
+    $.ajax({
+        "url": bettingFuturesMarketURL,
+        "method": "GET"
+    }).done(function (response) {
+        // Declare Data Response
+        let data = response[0];
+        // Name of Betting Market Type and As Of Date - Can be placed on #NLWinnerOdds
+        let NLWinner     = data.BettingMarkets[14].BettingBetType;
+        let NLWinnerTime = data.BettingMarkets[14].Updated;
+        $('#NLWinnerOdds').text(NLWinner + " as of " + NLWinnerTime);
+        // Configure Array for National League Odds at DraftKings sportsbook (Id=7)
+        let draftKingsNtLgOddsArr  = [];
+        // Loop through Array for National League Odds and push "line" to National League Odds at DraftKings sportsbook Array (above)
+        let tempArr = data.BettingMarkets[14].BettingOutcomes;
+        tempArr.forEach(function(tempEl) {
+            let sportsBook = tempEl.SportsBook;
+            if (sportsBook.SportsbookID === 7) {
+                draftKingsNtLgOddsArr.push(tempEl);
+            };
+        });
+        // Loop through Array for National League Odds at DraftKings sportsbook and push teamName and odds to functional array
+        draftKingsNtLgOddsArr.forEach(function(dkNtLgEl) {
+            NLWinnerArr.push({
+                teamName: dkNtLgEl.Participant,
+                odds:     dkNtLgEl.PayoutAmerican
+            });
+        });
+        // Dynamically generate National League Odds "Drop-Down Screen" - List Group
+        NLWinnerOddsArr.forEach(function(dkNtLgEl) {
+        let teamName  = dkNtLgEl.teamName;
+        let NLodds    = dkNtLgEl.odds;
+        let listGroup = $("#NLWinnerOdds");
+        // Create list-item for teamName
+        let listItem  = $("<p>");
+        // Add classes to list-item
+        listItem.addClass("list-group-item d-flex justify-content-between align-items-center");
+        // Set text of list-item to teamName
+        listItem.text(teamName);
+        // Create list-item-span for odds
+        let listItemSpan = $("<span>");
+        // Add classes to list-item-spand
+        listItemSpan.addClass("badge badge-dark");
+        // Set text of list-item-span to odds
+        listItemSpan.text(NLodds);
         // Append listItem to listGroup and listSpan to listItem
         listGroup.append(listItem.append(listItemSpan));
         });
@@ -75,8 +180,11 @@ $(document).ready(function() {
 
 
 
+
+
 // SportsData.io API - Ajax Call - Populate Pre-Game Odds
-// SportsData.io API - Ajax Call - Populate Live Odds -     FROM THE IMPLEMENTATIONS GUIDE ON WEBSITE
+// SportsData.io API - Ajax Call - Populate Live Odds -     
+// ======================================================  FROM THE IMPLEMENTATIONS GUIDE ON WEBSITE  ====================================================== 
     // Check for Pending Games
         // the game should have started (Game.DateTime < Now) or Status === InProgress
         // the game DOES NOT include one of statuses: (Game.Status not in ('Final', 'Postponed', 'Canceled'))
@@ -98,6 +206,7 @@ $(document).ready(function() {
     // ajaxCall to gamesOddsByDateURL to sort games by game "status"; push in-progress games to global array inProgressArr, scheduled+ games to scheduledArr, and completed games to completedArr
     // when pushing game to specified array, it will carry a few properties that should be rendered on the page after final ajaxCall 
     $.ajax({
+        "async": false,
         "url": gamesOddsByDateURL,
         "method": "GET"
     }).done(function (response) {
@@ -110,7 +219,7 @@ $(document).ready(function() {
                     awayTeamName:        gameEl.AwayTeamName,
                     awayTeamID:          gameEl.AwayTeamId
                 });
-            } else if (gameEl.Status === "Scheduled" || gameEl.Status === "Postponed" || gameEl.Status === "Canceled" ) {
+            } else if (gameEl.Status === "Scheduled" || gameEl.Status === "Postponed" || gameEl.Status === "Canceled" || gameEl.Status === "Suspended" ) {
                 scheduledArr.push({
                     gameID:              gameEl.GameId,
                     homeTeamName:        gameEl.HomeTeamName,
@@ -139,6 +248,7 @@ $(document).ready(function() {
         
         // ajaxCall to boxScoresByDateURL to get variety of data properties to add to either inProgressArr, scheduledArr, completedArr; match on gameID as defined in *Arr
         $.ajax({
+        "async": false,
         "url": boxScoresByDateURL,
         "method": "GET"
         }).done(function(response) {
@@ -173,6 +283,7 @@ $(document).ready(function() {
         });
             // ajaxCall to teamsURL to GET Team logo link (svg) and add to either inProgressArr, scheduledArr, completedArr; match on homeTeamID and awayTeamID as defined in *Arr
             $.ajax({
+                "async": false,
                 url: teamsURL,
                 method: "GET"
             }).done(function(response) {
@@ -205,9 +316,9 @@ $(document).ready(function() {
                 });
             });
 
-
             // ajaxCall to stadiumURL to GET Stadium properties and add to scheduledArr; match on stadiumID as defined it scheduledArr - - - not working for me
             $.ajax({
+                "async": false,
                 "url": stadiumURL,
                 "method": "GET"
                 }).done(function(response) {
@@ -215,9 +326,6 @@ $(document).ready(function() {
                         let stadiumStID = stadiumEl.StadiumID;
 
                         inProgressArr.forEach(function(gameEl) {
-                            console.log(gameEl);
-                            // console.log(gameEl.stadiumID); returns undefined even though it is present in the gameEl on line 218 (line above) and thus "if conditional" is not firing 
-                            console.log(stadiumStID);
                             if (gameEl.stadiumID === stadiumStID) {
                                 gameEl.stadiumName  = stadiumEl.Name,
                                 gameEl.stadiumCity  = stadiumEl.City,
@@ -226,13 +334,34 @@ $(document).ready(function() {
                         });
 
                         scheduledArr.forEach(function(gameEl) {
-                            console.log(gameEl);
-                            console.log(gameEl.stadiumID);  
-                            console.log(stadiumStID);
+
                             if (gameEl.stadiumID === stadiumStID) {
                                 gameEl.stadiumName  = stadiumEl.Name,
                                 gameEl.stadiumCity  = stadiumEl.City,
                                 gameEl.stadiumState = stadiumEl.State 
+                            };
+                        });
+
+                    });
+                });
+
+            // ajaxCall to liveGameOddsURL to get Live Odds for the games that are inProgress (inProgressArr)
+            $.ajax({
+                "async": false,
+                "url": liveGameOddsURL,
+                "method": "GET"
+                }).done(function(response) {
+                    response.forEach(function(liveGameEl) {
+                        let liveGameGameID = liveGameEl.GameId;
+
+                        inProgressArr.forEach(function(gameEl) {
+                            if (gameEl.gameID === liveGameGameID) {
+                                gameEl.liveHomeMoneyLine = liveGameEl.LiveOdds[0].HomeMoneyLine,
+                                gameEl.liveAwayMoneyLine = liveGameEl.LiveOdds[0].AwayMoneyLine,
+                                gameEl.homePointSpread   = liveGameEl.LiveOdds[0].HomePointSpread,
+                                gameEl.awayPointSpread   = liveGameEl.LiveOdds[0].AwayPointSpread,
+                                gameEl.homePointSpreadPayout = liveGameEl.LiveOdds[0].HomePointSpreadPayout,
+                                gameEl.awayPointSpreadPayout = liveGameEl.LiveOdds[0].AwayPointSpreadPayout
                             };
                         });
 
@@ -245,25 +374,23 @@ $(document).ready(function() {
         console.log(scheduledArr);
         console.log(completedArr);
 
-    
-    // after returning the above data and subsequent data manipulation / configuration, we will need
-    // to deconstructe the arrays and pass in each GameID into the BoxScore API for following... 
-        // 1. In-Progress Data Points
-            // a. InningDescription
-            // b. HomeTeamRuns
-            // c. AwayTeamRuns
-            // d. Channel
-        // 2. Scheduled Data Points 
-            // a. DateTime
-            // b. StadiumID ?? 
-        // 3. Completed Data Points 
-            // a. 
-
-
-
-
 });
 
 
 
 // set an attr on score-card of gameID? 
+
+
+
+// 09-30-2020 Follow Ups
+// Recheck Array Index on Futures Betting ajaxCalls - All 
+// Dynamically change date variables needed for Endpoint URLs - Collin / Derek 
+        // var date = moment().format("MMM Do YYYY, H:MM a");
+        // $("#currentDay").append(date);
+// "Complete Card" UI in bootstrap gridsystem - Nancy 
+// UI and CSS work - Derek and Nancy 
+// Modal = https://getbootstrap.com/docs/4.0/components/modal/ - All 
+    // Live Game Modal 
+    // Pre-Game Modal 
+// News Feed and News Feed Card
+    // https://api.sportsdata.io/v3/mlb/scores/json/News?key=fae190a3b3c447529f443fead4937d4c
