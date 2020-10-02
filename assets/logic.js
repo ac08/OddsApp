@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // SportsData.io API Key 
-    let sportDataApiKey         = "?key=fae190a3b3c447529f443fead4937d4c";
+    // let sportDataApiKey         = "?key=fae190a3b3c447529f443fead4937d4c";
     
     // SportsData.io API - Endpoint URLs
     let bettingFuturesMarketURL = "https://api.sportsdata.io/v3/mlb/odds/json/BettingFuturesBySeason/2020POST?key=fae190a3b3c447529f443fead4937d4c"
@@ -29,10 +29,9 @@ $(document).ready(function() {
     }).done(function (response) {
         // Declare Data Response 
         let data = response[0];
-        // Name of Betting Market Type and As Of Date - Can be placed on #worldSeriesWinner
+        // Name of Betting Market Type and As Of Date - Can be placed on #worldSeriesWinnerOdds
         let worldSeriesWinner     = data.BettingMarkets[11].BettingBetType;
-        let worldSeriesWinnerTime = data.BettingMarkets[11].Updated;
-        $('#worldSeriesWinner').text(worldSeriesWinner + " as of " + worldSeriesWinnerTime);
+        $('#worldSeriesWinnerOdds').text(worldSeriesWinner);
 
         // Configure Array for World Series Odds at DraftKings sportsbook (Id=7)
         let draftKingsWSOddsArr  = [];
@@ -84,8 +83,7 @@ $(document).ready(function() {
         let data = response[0];
         // Name of Betting Market Type and As Of Date - Can be placed on #ALWinnerOdds
         let ALWinner     = data.BettingMarkets[15].BettingBetType;
-        let ALWinnerTime = data.BettingMarkets[15].Updated;
-        $("#ALWinnerOdds").text(ALWinner + " as of " + ALWinnerTime);
+        $("#ALWinnerOdds").text(ALWinner);
 
         // Configure Array for American League Odds at DraftKings sportsbook (Id=7)
         let draftKingsAmLgOddsArr  = [];
@@ -137,8 +135,7 @@ $(document).ready(function() {
         let data = response[0];
         // Name of Betting Market Type and As Of Date - Can be placed on #NLWinnerOdds
         let NLWinner     = data.BettingMarkets[14].BettingBetType;
-        let NLWinnerTime = data.BettingMarkets[14].Updated;
-        $('#NLWinnerOdds').text(NLWinner + " as of " + NLWinnerTime);
+        $('#NLWinnerOdds').text(NLWinner);
         // Configure Array for National League Odds at DraftKings sportsbook (Id=7)
         let draftKingsNtLgOddsArr  = [];
         // Loop through Array for National League Odds and push "line" to National League Odds at DraftKings sportsbook Array (above)
