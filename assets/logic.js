@@ -474,7 +474,6 @@ let NLWinnerArr        = [];
             let futuresMarketDiv  = $("#futuresMarket");
             let preGameCard       = $("<div>");                            // begin pre-game score card
             preGameCard.addClass("container-fluid border text-center my-4");
-            console.log(gameEl.gameID);
             preGameCard.attr("id", gameEl.gameID);
             let preGameHomeRow    = $("<div>");                            // begin pre-game home row
             preGameHomeRow.addClass("row border");
@@ -485,7 +484,6 @@ let NLWinnerArr        = [];
                         .attr("id", "homeTeamLogo");
             let homeTeamName      = $("<div>");
             homeTeamName.addClass("col-4 border");
-            console.log(gameEl.homeTeamName);
             homeTeamName.text(gameEl.homeTeamName);
             let gameTime          = $("<div>");
             gameTime.addClass("col-6 border");
@@ -505,31 +503,46 @@ let NLWinnerArr        = [];
 
     function loadLiveGameCards() {
         inProgressArr.forEach(function(gameEl) {
-            let futuresMarketDiv  = $("#futuresMarket");
-            let preGameCard       = $("<div>");                            // begin live score card
-            preGameCard.addClass("container-fluid border text-center my-4");
-            console.log(gameEl.gameID);
-            preGameCard.attr("id", gameEl.gameID);
-            let preGameHomeRow    = $("<div>");                            // begin live home row
-            preGameHomeRow.addClass("row border");
-            preGameCard.append(preGameHomeRow);
+            let futuresMarketDiv   = $("#futuresMarket");
+            let liveGameCard       = $("<div>");                            // begin live score card
+            liveGameCard.addClass("container-fluid border text-center my-4");
+            liveGameCard.attr("id", gameEl.gameID);
+            let liveGameHomeRow    = $("<div>");                            // begin live home row
+            liveGameHomeRow.addClass("row border");
             let homeTeamLogo      = $("<img>")
             homeTeamLogo.addClass("col-1");
             homeTeamLogo.attr("src", gameEl.homeTeamLogo)
                         .attr("id", "homeTeamLogo");
             let homeTeamName      = $("<div>");
             homeTeamName.addClass("col-4 border");
-            console.log(gameEl.homeTeamName);
             homeTeamName.text(gameEl.homeTeamName);
-            let gameTime          = $("<div>");
-            gameTime.addClass("col-6 border");
-            let preGameBtn        = $("<button>");
-            preGameBtn.addClass("col-1 border")
-                      .attr("data-toggle", "modal")
-                      .attr("data-target", "#pre-game-modal");
+
+            let liveInfoDiv = $("<div>");
+            liveInfoDiv.addClass("col-6 border");
+            let liveInfoCon = $("<div>");
+            liveInfoCon.addClass("container-fluid");
+            liveInfoDiv.append(liveInfoCon);
+            let liveInfoRow = $("<div>");
+            liveInfoRow.addClass("row");
+            liveInfoCon.append(liveInfoRow);
+            let liveHomeScore = $("<div>");
+            liveHomeScore.addClass("col-4 border");
+            liveHomeScore.text(gameEl.homeTeamRuns);
+            let liveInning = $("<div>");
+            liveInning.addClass("col-8 border");
+            liveInning.text(gameEl.inning);
+            liveInfoRow.append(liveHomeScore, liveInning);
             
-            preGameCard.insertAfter(futuresMarketDiv);
-            preGameHomeRow.append(homeTeamLogo, homeTeamName, gameTime, preGameBtn);
+
+            let liveGameBtn = $("<button>");
+            liveGameBtn.addClass("col-1 border")
+                        .attr("data-toggle", "modal")
+                        .attr("data-target", "#pre-game-modal");
+
+
+            liveGameCard.insertAfter(futuresMarketDiv);
+            liveGameCard.append(liveGameHomeRow);
+            liveGameHomeRow.append(homeTeamLogo, homeTeamName, liveInfoDiv, liveGameBtn);
 
         });
     };
