@@ -1,26 +1,29 @@
 $(document).ready(function() {
-    // SportsData.io API Key 
-    // let sportDataApiKey         = "?key=fae190a3b3c447529f443fead4937d4c";
-    
-    // SportsData.io API - Endpoint URLs
-    let bettingFuturesMarketURL = "https://api.sportsdata.io/v3/mlb/odds/json/BettingFuturesBySeason/2020POST?key=fae190a3b3c447529f443fead4937d4c"
-    // will need to dynamically generate the dates in the correct format
-    let gameDate                = "2020-09-30";
-    let boxScoreDate            = "2020-SEP-30";
-    let LiveGameOddsDate        = "2020-09-30";
-    let playerDate              = "2020-SEP-30";
-    let gamesOddsByDateURL      = "https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/" + gameDate + sportDataApiKey;
-    let boxScoresByDateURL      = "https://api.sportsdata.io/v3/mlb/stats/json/BoxScores/" + boxScoreDate + sportDataApiKey;
-    let teamsURL                = "https://api.sportsdata.io/v3/mlb/scores/json/teams" + sportDataApiKey;
-    let playerStatsByDate       = "https://api.sportsdata.io/v3/mlb/stats/json/PlayerGameStatsByDate/" + playerDate + sportDataApiKey
-    let stadiumURL              = "https://api.sportsdata.io/v3/mlb/scores/json/Stadiums" + sportDataApiKey;
-    let liveGameOddsURL         = "https://api.sportsdata.io/v3/mlb/odds/json/LiveGameOddsByDate/" + LiveGameOddsDate + sportDataApiKey;
-    let newsURL                 = "https://api.sportsdata.io/v3/mlb/scores/json/News" + sportDataApiKey;
-    
-    // SportsData.io API - Ajax Call - Populate Futures Odds
-    let worldSeriesOddsArr = [];
-    let ALWinnerArr        = [];
-    let NLWinnerArr        = [];
+// SportsData.io API Key 
+// may want to have input button to enter API key on load? 
+let sportDataApiKey         = "?key=fae190a3b3c447529f443fead4937d4c";
+
+// SportsData.io API - Endpoint URLs
+let bettingFuturesMarketURL = "https://api.sportsdata.io/v3/mlb/odds/json/BettingFuturesBySeason/2020POST?key=fae190a3b3c447529f443fead4937d4c"
+// will need to dynamically generate the dates in the correct format
+let gameDate                = "2020-10-02";
+let boxScoreDate            = "2020-OCT-02";
+let LiveGameOddsDate        = "2020-10-02";
+let playerDate              = "2020-OCT-02";
+let gamesOddsByDateURL      = "https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/" + gameDate + sportDataApiKey;
+let boxScoresByDateURL      = "https://api.sportsdata.io/v3/mlb/stats/json/BoxScores/" + boxScoreDate + sportDataApiKey;
+let teamsURL                = "https://api.sportsdata.io/v3/mlb/scores/json/teams" + sportDataApiKey;
+let playerStatsByDate       = "https://api.sportsdata.io/v3/mlb/stats/json/PlayerGameStatsByDate/" + playerDate + sportDataApiKey
+let stadiumURL              = "https://api.sportsdata.io/v3/mlb/scores/json/Stadiums" + sportDataApiKey;
+let liveGameOddsURL         = "https://api.sportsdata.io/v3/mlb/odds/json/LiveGameOddsByDate/" + LiveGameOddsDate + sportDataApiKey;
+let newsURL                 = "https://api.sportsdata.io/v3/mlb/scores/json/News" + sportDataApiKey;
+
+let WSBettingMarketArr = [];
+let worldSeriesOddsArr = [];
+let ALBettingMarketArr = [];
+let ALWinnerArr        = [];
+let NLBettingMarketArr = [];
+let NLWinnerArr        = [];
 
     // ajaxCall to bettingFuturesMarketURL to retrieve World Series 2020 Odds by Team and append them dynamically to the page
     $.ajax({
@@ -29,14 +32,26 @@ $(document).ready(function() {
     }).done(function (response) {
         // Declare Data Response 
         let data = response[0];
-        // Name of Betting Market Type and As Of Date - Can be placed on #worldSeriesWinnerOdds
-        let worldSeriesWinner     = data.BettingMarkets[11].BettingBetType;
-        $('#worldSeriesWinnerOdds').text(worldSeriesWinner);
+        // Filter out all betting markets "World Series Winner"
+        let bettingMarkets = data.BettingMarkets;
+        bettingMarkets.forEach(function(bettingMarketEl) {
+            if (bettingMarketEl.BettingBetType) {
+                if (bettingMarketEl.BettingBetType === "World Series Winner") {
+                    WSBettingMarketArr.push(bettingMarketEl);
+                };
+            } else return
+        });
+
+        // Name of Betting Market Type - Can be placed on #worldSeriesWinnerOdds
+        if (WSBettingMarketArr[0]) {
+            let WSWinner = WSBettingMarketArr[0].BettingBetType;
+            $('#worldSeriesWinnerOdds').text(WSWinner);
+        } else return
 
         // Configure Array for World Series Odds at DraftKings sportsbook (Id=7)
         let draftKingsWSOddsArr  = [];
         // Loop through Array for World Series Odds and push "line" to World Series Odds at DraftKings sportsbook Array (above)
-        let tempArr = data.BettingMarkets[11].BettingOutcomes;
+        let tempArr = WSBettingMarketArr[0].BettingOutcomes;
         tempArr.forEach(function(tempEl) {
             let sportsBook = tempEl.SportsBook;
             if (sportsBook.SportsbookID === 7) {
@@ -56,7 +71,7 @@ $(document).ready(function() {
         worldSeriesOddsArr.forEach(function(worldSeriesOddsEl) {
         let teamName  = worldSeriesOddsEl.teamName;
         let WSodds    = worldSeriesOddsEl.odds;
-        let listGroup = $("#worldSeriesWinner");
+        let listGroup = $("#worldSeriesWinnerOdds");
         // Create list-item for teamName
         let listItem  = $("<p>");
         // Add classes to list-item
@@ -70,7 +85,7 @@ $(document).ready(function() {
         // Set text of list-item-span to odds
         listItemSpan.text(WSodds); 
         // Append listItem to listGroup and listSpan to listItem
-        listGroup.append(listItem.append(listItemSpan));
+        listGroup.append(listItem, listItemSpan);
         });
     });
 
@@ -81,14 +96,26 @@ $(document).ready(function() {
     }).done(function (response) {
         // Declare Data Response 
         let data = response[0];
-        // Name of Betting Market Type and As Of Date - Can be placed on #ALWinnerOdds
-        let ALWinner     = data.BettingMarkets[15].BettingBetType;
-        $("#ALWinnerOdds").text(ALWinner);
+        // Filter out all betting markets "AL Winner"
+        let bettingMarkets = data.BettingMarkets;
+        bettingMarkets.forEach(function(bettingMarketEl) {
+            if (bettingMarketEl.BettingBetType) {
+                if (bettingMarketEl.BettingBetType === "AL Winner") {
+                    ALBettingMarketArr.push(bettingMarketEl);
+                };
+            } else return
+        });
 
-        // Configure Array for American League Odds at DraftKings sportsbook (Id=7)
+        // Name of Betting Market Type - Can be placed on #ALWinnerOdds
+        if (ALBettingMarketArr[0]) {
+            let ALWinner = ALBettingMarketArr[0].BettingBetType;
+            $('#ALWinnerOdds').text(ALWinner);
+        } else return
+
+        // Configure Array for AL Winner Odds at DraftKings sportsbook (Id=7)
         let draftKingsAmLgOddsArr  = [];
-        // Loop through Array for American League Odds and push "line" to American League Odds at DraftKings sportsbook Array (above)
-        let tempArr = data.BettingMarkets[15].BettingOutcomes;
+        // Loop through Array for AL Winner Odds and push "line" to AL Winner Odds at DraftKings sportsbook Array (above)
+        let tempArr = ALBettingMarketArr[0].BettingOutcomes;
         tempArr.forEach(function(tempEl) {
             let sportsBook = tempEl.SportsBook;
             if (sportsBook.SportsbookID === 7) {
@@ -133,20 +160,33 @@ $(document).ready(function() {
     }).done(function (response) {
         // Declare Data Response
         let data = response[0];
-        // Name of Betting Market Type and As Of Date - Can be placed on #NLWinnerOdds
-        let NLWinner     = data.BettingMarkets[14].BettingBetType;
-        $('#NLWinnerOdds').text(NLWinner);
-        // Configure Array for National League Odds at DraftKings sportsbook (Id=7)
-        let draftKingsNtLgOddsArr  = [];
-        // Loop through Array for National League Odds and push "line" to National League Odds at DraftKings sportsbook Array (above)
-        let tempArr = data.BettingMarkets[14].BettingOutcomes;
+        // Filter out all betting markets "NL Winner"
+        let bettingMarkets = data.BettingMarkets;
+        bettingMarkets.forEach(function(bettingMarketEl) {
+            if (bettingMarketEl.BettingBetType) {
+                if (bettingMarketEl.BettingBetType === "NL Winner") {
+                    NLBettingMarketArr.push(bettingMarketEl);
+                };
+            } else return
+        });
+
+        // Name of Betting Market Type - Can be placed on #NLWinnerOdds
+        if (NLBettingMarketArr[0]) {
+            let NLWinner = NLBettingMarketArr[0].BettingBetType;
+            $('#NLWinnerOdds').text(NLWinner);
+        } else return
+
+        // Configure Array for NL Winner Odds at DraftKings sportsbook (Id=7)
+        let draftKingsNtLgOddsArr = [];
+        // Loop through Array for NL Winner Odds and push "line" to NL Winner Odds at DraftKings sportsbook Array (above)
+        let tempArr = NLBettingMarketArr[0].BettingOutcomes;
         tempArr.forEach(function(tempEl) {
             let sportsBook = tempEl.SportsBook;
             if (sportsBook.SportsbookID === 7) {
                 draftKingsNtLgOddsArr.push(tempEl);
             };
         });
-        // Loop through Array for National League Odds at DraftKings sportsbook and push teamName and odds to functional array
+        // Loop through Array for NL Winner Odds at DraftKings sportsbook and push teamName and odds to functional array
         draftKingsNtLgOddsArr.forEach(function(dkNtLgEl) {
             NLWinnerArr.push({
                 teamName: dkNtLgEl.Participant,
@@ -227,12 +267,10 @@ $(document).ready(function() {
         });
     });
 
-
-
-    let inProgressArr = [];
-    // map out example of final "product" (object with key-value pairs) here =======================
-    let scheduledArr  = [];
-    let completedArr  = [];
+    let inProgressArr  = [];
+    let scheduledArr   = [];
+    let completedArr   = [];
+    let unAvailableArr = [];
 
     // ajaxCall to gamesOddsByDateURL to sort games by game "status"; push in-progress games to global array inProgressArr, scheduled+ games to scheduledArr, and completed games to completedArr
     // when pushing game to specified array, it will carry a few properties that should be rendered on the page after final ajaxCall 
@@ -250,7 +288,7 @@ $(document).ready(function() {
                     awayTeamName:        gameEl.AwayTeamName,
                     awayTeamID:          gameEl.AwayTeamId
                 });
-            } else if (gameEl.Status === "Scheduled" || gameEl.Status === "Postponed" || gameEl.Status === "Canceled" || gameEl.Status === "Suspended" ) {
+            } else if (gameEl.Status === "Scheduled") {
                 scheduledArr.push({
                     gameID:              gameEl.GameId,
                     homeTeamName:        gameEl.HomeTeamName,
@@ -262,6 +300,12 @@ $(document).ready(function() {
                     overUnder:           gameEl.PregameOdds[0].OverUnder,
                     overOdds:            gameEl.PregameOdds[0].OverPayout,
                     underOdds:           gameEl.PregameOdds[0].UnderPayout 
+                });
+            } else if (gameEl.Status === "Postponed" || gameEl.Status === "Canceled" || gameEl.Status === "Suspended") {
+                unAvailableArr.push({
+                    gameID:              gameEl.GameId,
+                    homeTeamName:        gameEl.HomeTeamName, 
+                    awayTeamName:        gameEl.AwayTeamName
                 });
             } else {
                 completedArr.push({
@@ -323,25 +367,25 @@ $(document).ready(function() {
 
                     inProgressArr.forEach(function(gameEl){
                         if (gameEl.homeTeamID === teamID) {
-                            gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                            gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl
                         } else if (gameEl.awayTeamID === teamID) {
-                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
                         };
                     });
 
                     scheduledArr.forEach(function(gameEl){
                         if (gameEl.homeTeamID === teamID) {
-                            gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                            gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl
                         } else if (gameEl.awayTeamID === teamID) {
-                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
                         };
                     });
 
                     completedArr.forEach(function(gameEl){
                         if (gameEl.homeTeamID === teamID) {
-                            gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                            gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl
                         } else if (gameEl.awayTeamID === teamID) {
-                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl;
+                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
                         };
                     });
                 });
@@ -385,17 +429,18 @@ $(document).ready(function() {
                             response.forEach(function(liveGameEl) {
                                 let liveGameGameID = liveGameEl.GameId;
 
-                                inProgressArr.forEach(function(gameEl) {
-                                    if (gameEl.gameID === liveGameGameID) {
-                                        gameEl.liveHomeMoneyLine     = liveGameEl.LiveOdds[0].HomeMoneyLine,
-                                        gameEl.liveAwayMoneyLine     = liveGameEl.LiveOdds[0].AwayMoneyLine,
-                                        gameEl.homePointSpread       = liveGameEl.LiveOdds[0].HomePointSpread,
-                                        gameEl.awayPointSpread       = liveGameEl.LiveOdds[0].AwayPointSpread,
-                                        gameEl.homePointSpreadPayout = liveGameEl.LiveOdds[0].HomePointSpreadPayout,
-                                        gameEl.awayPointSpreadPayout = liveGameEl.LiveOdds[0].AwayPointSpreadPayout
-                                    };
-                                });
-
+                                if (liveGameEl.Status === "InProgress") {
+                                    inProgressArr.forEach(function(gameEl) {
+                                        if (gameEl.gameID === liveGameGameID) {
+                                            gameEl.liveHomeMoneyLine     = liveGameEl.LiveOdds[0].HomeMoneyLine,
+                                            gameEl.liveAwayMoneyLine     = liveGameEl.LiveOdds[0].AwayMoneyLine,
+                                            gameEl.homePointSpread       = liveGameEl.LiveOdds[0].HomePointSpread,
+                                            gameEl.awayPointSpread       = liveGameEl.LiveOdds[0].AwayPointSpread,
+                                            gameEl.homePointSpreadPayout = liveGameEl.LiveOdds[0].HomePointSpreadPayout,
+                                            gameEl.awayPointSpreadPayout = liveGameEl.LiveOdds[0].AwayPointSpreadPayout
+                                        };
+                                    });
+                                }
                             });
                         });
 
@@ -420,13 +465,85 @@ $(document).ready(function() {
                             });
     });
 
-
     console.log(inProgressArr);
     console.log(scheduledArr);
     console.log(completedArr);
 
+    function loadPreGameCards() {
+        scheduledArr.forEach(function(gameEl) {
+            let futuresMarketDiv  = $("#futuresMarket");
+            let preGameCard       = $("<div>");                            // begin pre-game score card
+            preGameCard.addClass("container-fluid border text-center my-4");
+            console.log(gameEl.gameID);
+            preGameCard.attr("id", gameEl.gameID);
+            let preGameHomeRow    = $("<div>");                            // begin pre-game home row
+            preGameHomeRow.addClass("row border");
+            preGameCard.append(preGameHomeRow);
+            let homeTeamLogo      = $("<img>")
+            homeTeamLogo.addClass("col-1");
+            homeTeamLogo.attr("src", gameEl.homeTeamLogo)
+                        .attr("id", "homeTeamLogo");
+            let homeTeamName      = $("<div>");
+            homeTeamName.addClass("col-4 border");
+            console.log(gameEl.homeTeamName);
+            homeTeamName.text(gameEl.homeTeamName);
+            let gameTime          = $("<div>");
+            gameTime.addClass("col-6 border");
+            let preGameBtn        = $("<button>");
+            preGameBtn.addClass("col-1 border")
+                      .attr("data-toggle", "modal")
+                      .attr("data-target", "#pre-game-modal");
+            
+            preGameCard.insertAfter(futuresMarketDiv);
+            preGameHomeRow.append(homeTeamLogo, homeTeamName, gameTime, preGameBtn);
+
+        });
+    };
+
+    loadPreGameCards();
+
+
+    function loadLiveGameCards() {
+        inProgressArr.forEach(function(gameEl) {
+            let futuresMarketDiv  = $("#futuresMarket");
+            let preGameCard       = $("<div>");                            // begin live score card
+            preGameCard.addClass("container-fluid border text-center my-4");
+            console.log(gameEl.gameID);
+            preGameCard.attr("id", gameEl.gameID);
+            let preGameHomeRow    = $("<div>");                            // begin live home row
+            preGameHomeRow.addClass("row border");
+            preGameCard.append(preGameHomeRow);
+            let homeTeamLogo      = $("<img>")
+            homeTeamLogo.addClass("col-1");
+            homeTeamLogo.attr("src", gameEl.homeTeamLogo)
+                        .attr("id", "homeTeamLogo");
+            let homeTeamName      = $("<div>");
+            homeTeamName.addClass("col-4 border");
+            console.log(gameEl.homeTeamName);
+            homeTeamName.text(gameEl.homeTeamName);
+            let gameTime          = $("<div>");
+            gameTime.addClass("col-6 border");
+            let preGameBtn        = $("<button>");
+            preGameBtn.addClass("col-1 border")
+                      .attr("data-toggle", "modal")
+                      .attr("data-target", "#pre-game-modal");
+            
+            preGameCard.insertAfter(futuresMarketDiv);
+            preGameHomeRow.append(homeTeamLogo, homeTeamName, gameTime, preGameBtn);
+
+        });
+    };
+
+    loadLiveGameCards();
 
 });
+
+
+
+// $("#loadGames").on("click", loadScoreCards);
+
+
+
 
 
 

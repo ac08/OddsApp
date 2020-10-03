@@ -76,7 +76,7 @@
                     </div>
             </nav>
         </header>
-        <div class="container-fluid">
+        <div id="futuresMarket" class="container-fluid mb-1">
             <div class="row">
                 <button id="WorldSeriesBtn" class="btn btn-light border col-sm-4" type="button" data-toggle="collapse" data-target="#worldSeriesWinnerOdds" aria-expanded="false" aria-controls="collapse">
                 World Series Odds 2020
@@ -93,29 +93,33 @@
                 <div id="ALWinnerOdds" class="collapse col-12 text-center border"></div>
                 <div id="NLWinnerOdds" class="collapse col-12 text-center border"></div>
             </div>
-        </div> <!-- end of futures market container -->
+        </div>
 
         <!-- Pre-Game Card -->
         <div id="pre-game-card" class="container-fluid text-center my-4">       <!-- begin pre-game score card -->
             <div id="pre-game-home" class="row">                                <!-- begin pre-game home row-->
-                <div id="homeTeamLogo" class="col-1 border">@</div>             <!-- home logo -->
+                <img id="homeTeamLogo" class="col-1"></img>                     <!-- home logo -->
                 <div id="homeTeamName" class="col-4 border">CLE Indians</div>   <!-- home team name -->
-                <div class="col-6 border">7:10 PM ET</div>                      <!-- game start time -->
-                <div class="col-1 border">*</div>                               <!-- button to trigger pre-game modal -->
+                <div id="gameTime" class="col-6 border">7:10 PM ET</div>        <!-- game start time -->
+                <button class="col-1 border"
+                        data-toggle="modal" 
+                        data-target="#pre-game-modal" 
+                >
+                </button>                                                       <!-- button to trigger pre-game modal -->
             </div>                                                              <!-- end pre-game home row -->
 
             <div id="pre-game-away" class="row">                                <!-- begin pre-game away row -->
-                <div id="awayTeamLogo" class="col-1 border">@</div>             <!-- away logo -->
+                <img id="awayTeamLogo" class="col-1"></img>                     <!-- away logo -->
                 <div id="awayTeamName" class="col-4 border">NY Yankees</div>    <!-- away team name -->
                 <div id="location" class="col-6 border">Field, OH</div>         <!-- location -->
-                <div class="col-1 border">**</div>                              <!-- button with some functionality -->
+                <button class="col-1 border">**</button>                        <!-- button with some functionality -->
             </div>                                                              <!-- end pre-game away row -->
         </div>                                                                  <!-- end pre-game score card -->
 
         <!-- Live Score Card -->
         <div id="live-score-card" class="container-fluid text-center my-4">     <!-- begin live score card -->
             <div id="live-score-home" class="row">                              <!-- begin live score home row-->
-                <div id="homeTeamLogo" class="col-1 border">@</div>             <!-- home logo -->
+                <img id="homeTeamLogo" class="col-1"></img>                     <!-- home logo -->
                 <div id="homeTeamName" class="col-4 border">CLE Indians</div>   <!-- home team name -->
                 <div class="col-6 border">
                     <div class="container-fluid">
@@ -125,11 +129,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-1 border">*</div>                              <!-- button to trigger live score modal -->
+                <button class="col-1 border"
+                        data-toggle="modal" 
+                        data-target="#live-game-modal" 
+                >
+                </button>                                                      <!-- button to trigger live score modal -->
             </div>                                                             <!-- end live score home row-->
 
             <div id="live-score-away" class="row">                             <!-- begin live score away row-->
-                <div id="awayTeamLogo" class="col-1 border">@</div>            <!-- away logo -->
+                <img id="awayTeamLogo" class="col-1"></img>                    <!-- away logo -->
                 <div id="awayTeamName" class="col-4 border">NY Yankees</div>   <!-- away team name -->
                 <div class="col-6 border">
                     <div class="container-fluid">
@@ -139,7 +147,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-1 border">**</div>                             <!-- button with some functionality -->
+                <button class="col-1 border">**</button>                       <!-- button with some functionality -->
             </div>                                                             <!-- end live score away row-->
         </div>                                                                 <!-- end live score card -->
 
@@ -175,6 +183,11 @@
     <div id="pre-game-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="pre-game-modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
+                <div class="container-fluid">
+                    <div class="row modal-header border">
+                        <h5 class="col-12 modal-title text-center border">Pre-Game Odds</h5>
+                    </div>
+                </div>
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row border mb-1">                            <!-- begin header row -->
@@ -246,6 +259,11 @@
     <div id="live-game-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="pre-game-modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
+                <div class="container-fluid">
+                    <div class="row modal-header border">
+                        <h5 class="col-12 modal-title text-center border">Live-Game Odds</h5>
+                    </div>
+                </div>
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row border mb-1">                            <!-- begin header row -->
@@ -310,21 +328,32 @@
         </div>                                                                   <!-- end live modal dialog div -->
     </div>                                                                       <!-- end live modal div -->
 
-
+    <!-- <button id="loadGames" type="button" class="btn btn-outline-dark">>Load Games</button> -->
 
 
     <!-- jQuery first, then Popper.js, then Bootstrap JavaScript, then user logic.js file -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="assets/logic.js"></script>
     <!-- scrollspy jQuery functionality per Bootstrap documentation -->
     <script> 
         $('[data-spy="scroll"]').each(function() {
             let $spy = $(this).scrollspy('refresh')
-        })
-    </script>   
+        });
+    </script>
+    <script src="assets/logic.js"></script>
+   
 
 
 </body>
 </html>
+
+
+
+<!-- matching modal to score card -->
+    <!-- render scorecard on the page -->
+        <!-- attach attr of "gameID" and equal to the instance's gameID-->
+    <!-- on click of the instance's modal, need to render modal accordingly -->
+        <!-- for pregame scorecard, filter through scheduledArr and match on gameEl.gameID -->
+        <!-- for in-progress / live scorecard, filter through the inProgressArr and match on gameEl.gameID -->
+        <!-- for completed scorecard, filter through the completedArr and match on gameEl.gameID -->
