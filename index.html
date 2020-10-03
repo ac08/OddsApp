@@ -112,14 +112,14 @@
                 <img id="awayTeamLogo" class="col-1"></img>                     <!-- away logo -->
                 <div id="awayTeamName" class="col-4 border">NY Yankees</div>    <!-- away team name -->
                 <div id="location" class="col-6 border">Field, OH</div>         <!-- location -->
-                <button class="col-1 border">**</button>                        <!-- button with some functionality -->
+                <div class="col-1 border">ESPN</div>                             <!-- div with channel -->
             </div>                                                              <!-- end pre-game away row -->
         </div>                                                                  <!-- end pre-game score card -->
 
         <!-- Live Score Card -->
         <div id="live-score-card" class="container-fluid text-center my-4">     <!-- begin live score card -->
             <div id="live-score-home" class="row">                              <!-- begin live score home row-->
-                <img id="homeTeamLogo" class="col-1"></img>                     <!-- home logo -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/San_Diego_Padres_logo.svg" id="homeTeamLogo" class="col-1"></img>                     <!-- home logo -->
                 <div id="homeTeamName" class="col-4 border">CLE Indians</div>   <!-- home team name -->
                 <div class="col-6 border">
                     <div class="container-fluid">
@@ -151,12 +151,33 @@
             </div>                                                             <!-- end live score away row-->
         </div>                                                                 <!-- end live score card -->
 
+
+
+        <!-- Completed Score Card -->
+        <div id="completeGamecard" class="container-fluid text-center my-4">    <!-- begin complete game score card -->
+            <div id="completeGameAway" class="row">                             <!-- begin complete game away row-->
+                <img id="awayTeamLogo" class="col-1"></img>                     <!-- away logo -->
+                <div id="awayTeamName" class="col-4 border">CLE Indians</div>   <!-- away team name -->
+                <div id="awayScore" class="col-2 border">5</div>                <!-- away score -->
+                <div id="pitcherOne" class="col-5 border">Name1</div>           <!-- pitcher one name -->
+            </div>                                                              <!-- end complete game away row -->
+                                                                        
+            <div id="completeGameHome" class="row">                             <!-- begin complete game home row-->
+                <img id="homeTeamLogo" class="col-1"></img>                     <!-- home logo -->
+                <div id="homeTeamName" class="col-4 border">NY Yankees</div>    <!-- home team name -->
+                <div id="homeScore" class="col-2 border">1</div>                <!-- home score -->
+                <div id="pitcherTwo" class="col-5 border">Name2</div>           <!-- pitcher two name -->
+            </div>                                                              <!-- end complete game home row -->
+
+        </div>                                                                  <!-- end complete game score card -->
+
+
         <!-- News Feed -->
         <div class="container-fluid mt-5">
             <div class="row">
                 <div class="col-sm-2">
                     <div id="headlines" class="list-group">
-                        <a class="list-group-item list-group-item-light list-group-item-action" href="#content-0">Current</a>
+                        <a class="list-group-item list-group-item-light list-group-item-action active" href="#content-0">Current</a>
                         <a class="list-group-item list-group-item-light list-group-item-action" href="#content-1">Yesterday</a>
                         <a class="list-group-item list-group-item-light list-group-item-action" href="#content-2">Catchup</a>
                         <a class="list-group-item list-group-item-light list-group-item-action" href="#content-3">Catchup</a>
@@ -164,7 +185,7 @@
                     </div>                                                     <!-- end headlines list-group, "table of contents "-->
                 </div>                                                         <!-- end col-2 -->
                 <div class="col-sm-10 border">
-                    <div data-spy="scroll" data-target="#list-example" data-offset="0" class="box border border">
+                    <div data-spy="scroll" data-target="#headlines" data-offset="0" class="box border">
                         <div id="content-0"></div>
                         <div id="content-1"></div>
                         <div id="content-2"></div>
