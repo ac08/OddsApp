@@ -524,7 +524,7 @@ let NLWinnerArr        = [];
             gameTime.addClass("col-6 border");
             gameTime.text(gameEl.dateTime);
             let preGameBtn        = $("<button>");
-            preGameBtn.addClass("col-1 border")
+            preGameBtn.addClass("col-1 preGameModalBtn border")           // add preGameModalBtn class for on-click function
                       .attr("data-toggle", "modal")
                       .attr("data-target", "#pre-game-modal")
                       .attr("id", gameEl.gameID);
@@ -537,6 +537,30 @@ let NLWinnerArr        = [];
     };
 
     loadPreGameCards();
+
+    $(".preGameModalBtn").on("click", function() {
+        let gameID = $(this).attr("id");
+        scheduledArr.forEach(function(gameEl) {
+            if (parseInt(gameID) === gameEl.gameID) {
+                console.log(gameEl);
+                $("#homeTeamLogoPre").attr("src", gameEl.homeTeamLogo);
+                // home team spread goes here
+                // home team spread odds goes here
+                $("#homeTeamMLPre").text(gameEl.homeMLOdds);
+                $("#overTotalPre").text("O" + gameEl.overUnder);
+                $("#overMLPre").text(gameEl.overOdds);
+
+                $("#awayTeamLogoPre").attr("href", gameEl.awayTeamLogo);
+                console.log(typeof gameEl.awayTeamLogo);
+                // away team spread goes here
+                // away team spread odds goes here
+                $("#awayTeamMLPre").text(gameEl.awayMLOdds);
+                $("#underTotalPre").text("U" + gameEl.overUnder);
+                $("#underMLPre").text(gameEl.underOdds);
+                
+            } else return
+        });
+    });
 
 
     function loadLiveGameCards() {
@@ -574,8 +598,8 @@ let NLWinnerArr        = [];
             
 
             let liveGameBtn = $("<button>");
-            liveGameBtn.addClass("col-1 border")
-                        .attr("data-toggle", "modal")
+            liveGameBtn.addClass("col-1 liveGameModalBtn border")                   // add liveGameModalBtn class for on-click function
+                        .attr("data-toggle", "modal") 
                         .attr("data-target", "#live-game-modal")
                         .attr("id", gameEl.gameID);
 
@@ -589,6 +613,32 @@ let NLWinnerArr        = [];
 
     loadLiveGameCards();
 
+    $(".liveGameModalBtn").on("click", function() {
+        let gameID = $(this).attr("id");
+        scheduledArr.forEach(function(gameEl) {
+            if (parseInt(gameID) === gameEl.gameID) {
+                console.log(gameEl);
+                $("#homeTeamLogoPre").attr("src", gameEl.homeTeamLogo);
+                // home team spread goes here
+                // home team spread odds goes here
+                $("#homeTeamMLPre").text(gameEl.homeMLOdds);
+                $("#overTotalPre").text("O" + gameEl.overUnder);
+                $("#overMLPre").text(gameEl.overOdds);
+
+                $("#awayTeamLogoPre").attr("href", gameEl.awayTeamLogo);
+                console.log(typeof gameEl.awayTeamLogo);
+                // away team spread goes here
+                // away team spread odds goes here
+                $("#awayTeamMLPre").text(gameEl.awayMLOdds);
+                $("#underTotalPre").text("U" + gameEl.overUnder);
+                $("#underMLPre").text(gameEl.underOdds);
+                
+            } else return
+        });
+    });
+
+
+
     function loadCompleteGameCards() {
         completedArr.forEach(function(gameEl) {
             let futuresMarketDiv   = $("#futuresMarket");
@@ -600,6 +650,8 @@ let NLWinnerArr        = [];
             let completeGameAwayRow = $("<div>");
             completeGameAwayRow.addClass("row");
             let awayTeamLogo = $("<img>");
+            awayTeamLogo.attr("src", gameEl.awayTeamLogo)
+                        .attr("id", "awayTeamLogo");
             awayTeamLogo.addClass("col-1");
             let awayTeamName = $("<div>");
             awayTeamName.addClass("col-4 border");
@@ -617,6 +669,8 @@ let NLWinnerArr        = [];
             let completeGameHomeRow = $("<div>");
             completeGameHomeRow.addClass("row");
             let homeTeamLogo        = $("<img>");
+            homeTeamLogo.attr("src", gameEl.homeTeamLogo)
+                        .attr("id", "homeTeamLogo");
             homeTeamLogo.addClass("col-1");
             let homeTeamName        = $("<div>");
             homeTeamName.addClass("col-4 border");
@@ -635,11 +689,11 @@ let NLWinnerArr        = [];
                 let winningPitcher = gameEl.winningPitcherName;
                 let losingPitcher  = gameEl.losingPitcherName;
                 if (awayFnScore > homeFnScore) {
-                    $("#pitcherOne").text(winningPitcher);
-                    $("#pitcherTwo").text(losingPitcher);
+                    $("#pitcherOne").text(winningPitcher + " (W)");
+                    $("#pitcherTwo").text(losingPitcher + " (L)");
                 } else {
-                    $("#pitcherTwo").text(losingPitcher);
-                    $("#pitcherOne").text(winningPitcher);
+                    $("#pitcherTwo").text(losingPitcher + " (L)");
+                    $("#pitcherOne").text(winningPitcher+ " (W)");
                 }
             };
 
