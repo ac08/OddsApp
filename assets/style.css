@@ -29,6 +29,7 @@
 #homeTeamLogo {
     max-width: 25px;
     max-height: 25px;
+    border-radius: 3px;
 }
 
 #awayTeamLogo {

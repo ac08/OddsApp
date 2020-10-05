@@ -1,0 +1,74 @@
+   <!-- Pre-Game Card -->
+   <div id="pre-game-card" class="container-fluid text-center my-4">       <!-- begin pre-game score card -->
+    <div id="pre-game-home" class="row">                                <!-- begin pre-game home row-->
+        <img id="homeTeamLogo" class="col-1"></img>                     <!-- home logo -->
+        <div id="homeTeamName" class="col-4 border">CLE Indians</div>   <!-- home team name -->
+        <div id="gameTime" class="col-6 border">7:10 PM ET</div>        <!-- game start time -->
+        <button class="col-1 border"
+                data-toggle="modal" 
+                data-target="#pre-game-modal" 
+        >
+        </button>                                                       <!-- button to trigger pre-game modal -->
+    </div>                                                              <!-- end pre-game home row -->
+
+    <div id="pre-game-away" class="row">                                <!-- begin pre-game away row -->
+        <img id="awayTeamLogo" class="col-1"></img>                     <!-- away logo -->
+        <div id="awayTeamName" class="col-4 border">NY Yankees</div>    <!-- away team name -->
+        <div id="location" class="col-6 border">Field, OH</div>         <!-- location -->
+        <div class="col-1 border">ESPN</div>                             <!-- div with channel -->
+    </div>                                                              <!-- end pre-game away row -->
+</div>                                                                  <!-- end pre-game score card -->
+
+<!-- Live Score Card -->
+<div id="live-score-card" class="container-fluid text-center my-4">     <!-- begin live score card -->
+    <div id="live-score-home" class="row">                              <!-- begin live score home row-->
+        <img id="homeTeamLogo" class="col-1"></img>                     <!-- home logo -->
+        <div id="homeTeamName" class="col-4 border">CLE Indians</div>   <!-- home team name -->
+        <div class="col-6 border">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-4 border">5</div>                   <!-- live home score -->
+                    <div class="col-8 border">7th Inning</div>          <!-- live inning -->
+                </div>
+            </div>
+        </div>
+        <button class="col-1 border"
+                data-toggle="modal" 
+                data-target="#live-game-modal" 
+        >
+        </button>                                                      <!-- button to trigger live score modal -->
+    </div>                                                             <!-- end live score home row-->
+
+    <div id="live-score-away" class="row">                             <!-- begin live score away row-->
+        <img id="awayTeamLogo" class="col-1"></img>                    <!-- away logo -->
+        <div id="awayTeamName" class="col-4 border">NY Yankees</div>   <!-- away team name -->
+        <div class="col-6 border">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-4 border">1</div>                  <!-- live away score -->
+                    <div class="col-8 border">TBD</div>                <!-- TBD -->
+                </div>
+            </div>
+        </div>
+        <button class="col-1 border">**</button>                       <!-- button with some functionality -->
+    </div>                                                             <!-- end live score away row-->
+</div>                                                                 <!-- end live score card -->
+
+
+<!-- Completed Score Card -->
+<div id="completeGamecard" class="container-fluid text-center my-4">    <!-- begin complete game score card -->
+    <div id="completeGameAway" class="row">                             <!-- begin complete game away row-->
+        <img id="awayTeamLogo" class="col-1"></img>                     <!-- away logo -->
+        <div id="awayTeamName" class="col-4 border">CLE Indians</div>   <!-- away team name -->
+        <div id="awayScore" class="col-2 border">5</div>                <!-- away score -->
+        <div id="pitcherOne" class="col-5 border">Name1</div>           <!-- pitcher one name -->
+    </div>                                                              <!-- end complete game away row -->
+                                                                
+    <div id="completeGameHome" class="row">                             <!-- begin complete game home row-->
+        <img id="homeTeamLogo" class="col-1"></img>                     <!-- home logo -->
+        <div id="homeTeamName" class="col-4 border">NY Yankees</div>    <!-- home team name -->
+        <div id="homeScore" class="col-2 border">1</div>                <!-- home score -->
+        <div id="pitcherTwo" class="col-5 border">Name2</div>           <!-- pitcher two name -->
+    </div>                                                              <!-- end complete game home row -->
+
+</div>                                                                  <!-- end complete game score card -->

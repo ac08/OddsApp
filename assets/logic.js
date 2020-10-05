@@ -7,7 +7,7 @@ let sportDataApiKey         = "?key=d2ff51fd95464aa7b5d2588142bd4ab4";
 // SportsData.io API - Endpoint URLs
 let bettingFuturesMarketURL = "https://api.sportsdata.io/v3/mlb/odds/json/BettingFuturesBySeason/2020POST?key=fae190a3b3c447529f443fead4937d4c"
 // will need to dynamically generate the dates in the correct format
-let gameDate                = "2020-10-05";
+let gameDate                = "2020-10-05"; // some expression that converts current day to current day in this format
 let boxScoreDate            = "2020-OCT-05";
 let LiveGameOddsDate        = "2020-10-05";
 let playerDate              = "2020-OCT-05";
@@ -280,6 +280,10 @@ let NLWinnerArr        = [];
         "method": "GET"
     }).done(function (response) {
         response.forEach(function(gameEl) {
+            
+            
+            
+            
             if (gameEl.Status === "InProgress") {
                 inProgressArr.push({
                     gameID:              gameEl.GameId,
@@ -288,17 +292,29 @@ let NLWinnerArr        = [];
                     awayTeamName:        gameEl.AwayTeamName,
                     awayTeamID:          gameEl.AwayTeamId
                 });
-            } else if (gameEl.Status === "Scheduled") {
+            }  else if (gameEl.Status === "Scheduled") {
                 scheduledArr.push({
                     gameID:              gameEl.GameId,
                     homeTeamName:        gameEl.HomeTeamName,
                     homeTeamID:          gameEl.HomeTeamId,
                     awayTeamName:        gameEl.AwayTeamName,
-                    awayTeamID:          gameEl.AwayTeamId
-                    
+                    awayTeamID:          gameEl.AwayTeamId,
+                    homeMLOdds:          gameEl.PregameOdds[0].HomeMoneyLine,
+                    awayMLOdds:          gameEl.PregameOdds[0].AwayMoneyLine,
+                    overUnder:           gameEl.PregameOdds[0].OverUnder,
+                    overOdds:            gameEl.PregameOdds[0].OverPayout,
+                    underOdds:           gameEl.PregameOdds[0].UnderPayout, 
+                    homePointSpread:     gameEl.PregameOdds[0].HomePointSpread,
+                    awayPointSpread:     gameEl.PregameOdds[0].AwayPointSpread,
+                    homePointSpreadOdds: gameEl.PregameOdds[0].HomePointSpreadPayout,
+                    awayPointSpreadOdds: gameEl.PregameOdds[0].AwayPointSpreadPayout,
+
+
+
                 });
-            }
-            else if(gameEl.Status === "Scheduled" && gameEl.PregameOdds){
+
+            }   else if (gameEl.Status === "Scheduled" && gameEl.PregameOdds){
+                console.log(gameEl.PregameOdds) // this else if is not firing because already fired above 
                 scheduledArr.push({
                     homeMLOdds:          gameEl.PregameOdds[0].HomeMoneyLine,
                     awayMLOdds:          gameEl.PregameOdds[0].AwayMoneyLine,
@@ -308,7 +324,7 @@ let NLWinnerArr        = [];
                 }); 
             }
             
-            else if (gameEl.Status === "Postponed" || gameEl.Status === "Canceled" || gameEl.Status === "Suspended") {
+             else if (gameEl.Status === "Postponed" || gameEl.Status === "Canceled" || gameEl.Status === "Suspended") {
                 unAvailableArr.push({
                     gameID:              gameEl.GameId,
                     homeTeamName:        gameEl.HomeTeamName, 
@@ -522,7 +538,16 @@ let NLWinnerArr        = [];
             homeTeamName.text(gameEl.homeTeamName);
             let gameTime          = $("<div>");
             gameTime.addClass("col-6 border");
-            gameTime.text(gameEl.dateTime);
+            
+            // date conversion here 
+            gameTime.text(
+
+                gameEl.dateTime
+
+                );
+
+
+
             let preGameBtn        = $("<button>");
             preGameBtn.addClass("col-1 preGameModalBtn border")           // add preGameModalBtn class for on-click function
                       .attr("data-toggle", "modal")
@@ -542,18 +567,18 @@ let NLWinnerArr        = [];
         let gameID = $(this).attr("id");
         scheduledArr.forEach(function(gameEl) {
             if (parseInt(gameID) === gameEl.gameID) {
-                console.log(gameEl);
                 $("#homeTeamLogoPre").attr("src", gameEl.homeTeamLogo);
-                // home team spread goes here
-                // home team spread odds goes here
+                $("#homeTeamSpreadPre").text(gameEl.homePointSpread);
+                $("#homeTeamSpreadOddsPre").text(gameEl.homePointSpreadPayout);
+
                 $("#homeTeamMLPre").text(gameEl.homeMLOdds);
                 $("#overTotalPre").text("O" + gameEl.overUnder);
                 $("#overMLPre").text(gameEl.overOdds);
 
-                $("#awayTeamLogoPre").attr("href", gameEl.awayTeamLogo);
-                console.log(typeof gameEl.awayTeamLogo);
-                // away team spread goes here
-                // away team spread odds goes here
+                $("#awayTeamLogoPre").attr("src", gameEl.awayTeamLogo);
+                $("#awayTeamSpreadPre").text(gameEl.awayPointSpread);
+                $("#awayTeamSpreadOddsPre").text(gameEl.awayPointSpreadPayout);
+
                 $("#awayTeamMLPre").text(gameEl.awayMLOdds);
                 $("#underTotalPre").text("U" + gameEl.overUnder);
                 $("#underMLPre").text(gameEl.underOdds);
@@ -615,23 +640,23 @@ let NLWinnerArr        = [];
 
     $(".liveGameModalBtn").on("click", function() {
         let gameID = $(this).attr("id");
-        scheduledArr.forEach(function(gameEl) {
+        inProgressArr.forEach(function(gameEl) {
             if (parseInt(gameID) === gameEl.gameID) {
-                console.log(gameEl);
-                $("#homeTeamLogoPre").attr("src", gameEl.homeTeamLogo);
-                // home team spread goes here
-                // home team spread odds goes here
-                $("#homeTeamMLPre").text(gameEl.homeMLOdds);
-                $("#overTotalPre").text("O" + gameEl.overUnder);
-                $("#overMLPre").text(gameEl.overOdds);
+                $("#homeTeamLogoLive").attr("src", gameEl.homeTeamLogo);
+                $("#homeTeamSpreadLive").text(gameEl.homePointSpread);
+                $("#homeTeamSpreadOddsLive").text(gameEl.homePointSpreadPayout);
+                $("#homeTeamMLLive").text(gameEl.liveHomeMoneyLine);
+                // need to figure below out on Monday
+                // $("#overTotalLive").text("O" + gameEl.);
+                // $("#overOddsLive").text(gameEl.);
 
-                $("#awayTeamLogoPre").attr("href", gameEl.awayTeamLogo);
-                console.log(typeof gameEl.awayTeamLogo);
-                // away team spread goes here
-                // away team spread odds goes here
-                $("#awayTeamMLPre").text(gameEl.awayMLOdds);
-                $("#underTotalPre").text("U" + gameEl.overUnder);
-                $("#underMLPre").text(gameEl.underOdds);
+                $("#awayTeamLogoLive").attr("src", gameEl.awayTeamLogo);
+                $("#awayTeamSpreadLive").text(gameEl.awayPointSpread);
+                $("#awayTeamSpreadOddsLive").text(gameEl.awayPointSpreadPayout);
+                $("#awayTeamMLLive").text(gameEl.liveAwayMoneyLine);
+                // need to figure below out on Monday during games
+                // $("#underTotalLive").text("U" + gameEl.);
+                // $("#underOddsLive").text(gameEl.);
                 
             } else return
         });
@@ -708,26 +733,12 @@ let NLWinnerArr        = [];
 
 
 
-// $("#loadGames").on("click", loadScoreCards);
 
 
 
-
-
-
-// set an attr on score-card of gameID? 
-
-
-
-// 09-30-2020 Follow Ups
-// Recheck Array Index on Futures Betting ajaxCalls - All 
+// 10-03-2020 Follow Ups
 // Dynamically change date variables needed for Endpoint URLs - Collin / Derek 
         // var date = moment().format("MMM Do YYYY, H:MM a");
         // $("#currentDay").append(date);
-// "Complete Card" UI in bootstrap gridsystem - Nancy 
 // UI and CSS work - Derek and Nancy 
-// Modal = https://getbootstrap.com/docs/4.0/components/modal/ - All 
-    // Live Game Modal 
-    // Pre-Game Modal 
-// News Feed and News Feed Card
-    // https://api.sportsdata.io/v3/mlb/scores/json/News?key=fae190a3b3c447529f443fead4937d4c
+
