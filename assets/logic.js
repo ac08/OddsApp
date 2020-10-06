@@ -769,7 +769,7 @@ let NLWinnerArr        = [];
         completedArr.forEach(function(gameEl) {
             let futuresMarketDiv     = $("#futuresMarket");
             let completeGameCard     = $("<div>");
-            completeGameCard.addClass("container-fluid text-center card my-4 border");
+            completeGameCard.addClass("container-fluid text-center card my-4 border completeGameCard");
             completeGameCard.attr("id", gameEl.gameID);
             completeGameCard.insertAfter(futuresMarketDiv);
 
