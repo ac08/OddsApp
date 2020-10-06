@@ -671,7 +671,6 @@ let NLWinnerArr        = [];
             liveHomeTeamLogo.addClass("col-1 card-img");
             liveHomeTeamLogo.attr("src", gameEl.homeTeamLogo)
                             .attr("id", "homeTeamLogoLive");
-            console.log(liveHomeTeamLogo);
             let homeTeamName      = $("<div>");
             homeTeamName.addClass("col-4");
             homeTeamName.text(gameEl.homeFullName);
@@ -751,13 +750,13 @@ let NLWinnerArr        = [];
         let gameID = $(this).attr("id");
         inProgressArr.forEach(function(gameEl) {
             if (parseInt(gameID) === gameEl.gameID) {
-                $("#homeTeamLogoLive").attr("src", gameEl.homeTeamLogo);
+                $("#homeTeamLogoLiveModal").attr("src", gameEl.homeTeamLogo);
                 console.log(gameEl.homeTeamLogo);
                 $("#homeTeamSpreadLive").text(gameEl.homePointSpread);
                 $("#homeTeamSpreadOddsLive").text(gameEl.homePointSpreadPayout);
                 $("#homeTeamMLLive").text(gameEl.liveHomeMoneyLine);
 
-                $("#awayTeamLogoLive").attr("src", gameEl.awayTeamLogo);
+                $("#awayTeamLogoLiveModal").attr("src", gameEl.awayTeamLogo);
                 $("#awayTeamSpreadLive").text(gameEl.awayPointSpread);
                 $("#awayTeamSpreadOddsLive").text(gameEl.awayPointSpreadPayout);
                 $("#awayTeamMLLive").text(gameEl.liveAwayMoneyLine);

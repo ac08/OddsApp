@@ -87,6 +87,25 @@
     border-radius: 8px;
 }
 
+#homeTeamLogoLiveModal {
+    background: transparent;
+    border: 1px solid grey;
+    max-width: 30px;
+    max-height: 30px;
+    margin: auto;
+    padding: 2px;
+    border-radius: 8px;
+}
+
+#awayTeamLogoLiveModal {
+    background: transparent;
+    border: 1px solid grey;
+    max-width: 30px;
+    max-height: 30px;
+    margin: auto;
+    padding: 2px;
+    border-radius: 8px;
+}
 
 body {
     background-color: rgba(248, 248, 248, 0.808);
