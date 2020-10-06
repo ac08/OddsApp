@@ -578,7 +578,7 @@ let NLWinnerArr        = [];
         scheduledArr.forEach(function(gameEl) {
             let futuresMarketDiv  = $("#futuresMarket");
             let preGameCard       = $("<div>");                                              // begin pre-game score card
-            preGameCard.addClass("container-fluid text-center card preGameCard");
+            preGameCard.addClass("container-fluid text-center card preGameCard mb-3");
             preGameCard.attr("id", gameEl.gameID);
             
             
@@ -662,15 +662,16 @@ let NLWinnerArr        = [];
     function loadLiveGameCards() {
         inProgressArr.forEach(function(gameEl) {
             let futuresMarketDiv   = $("#futuresMarket");
-            let liveGameCard       = $("<div>");                            // begin live score card
-            liveGameCard.addClass("container-fluid text-center card liveGameCard");
+            let liveGameCard       = $("<div>");                                            // begin live score card
+            liveGameCard.addClass("container-fluid text-center card liveGameCard mb-3");
             liveGameCard.attr("id", gameEl.gameID);
-            let liveGameHomeRow    = $("<div>");                            // begin live home row
+            let liveGameHomeRow    = $("<div>");                                            // begin live home row
             liveGameHomeRow.addClass("row card-body");
-            let homeTeamLogo      = $("<img>")
-            homeTeamLogo.addClass("col-1 card-img");
-            homeTeamLogo.attr("src", gameEl.homeTeamLogo)
-                        .attr("id", "homeTeamLogoLive");
+            let liveHomeTeamLogo      = $("<img>")
+            liveHomeTeamLogo.addClass("col-1 card-img");
+            liveHomeTeamLogo.attr("src", gameEl.homeTeamLogo)
+                            .attr("id", "homeTeamLogoLive");
+            console.log(liveHomeTeamLogo);
             let homeTeamName      = $("<div>");
             homeTeamName.addClass("col-4");
             homeTeamName.text(gameEl.homeFullName);
@@ -693,7 +694,7 @@ let NLWinnerArr        = [];
             liveInfoRow.append(liveHomeScore, liveInning);
 
             let liveGameBtn = $("<i>");
-            liveGameBtn.addClass("col-1 liveGameModalBtn fas fa-baseball-ball my-auto")                   // add liveGameModalBtn class for on-click function
+            liveGameBtn.addClass("col-1 liveGameModalBtn fas fa-baseball-ball my-auto")    // add liveGameModalBtn class for on-click function
                         .attr("data-toggle", "modal") 
                         .attr("data-target", "#live-game-modal")
                         .attr("id", gameEl.gameID);
@@ -702,12 +703,13 @@ let NLWinnerArr        = [];
 
 
 
-            let liveGameAwayRow    = $("<div>");                                                      // begin live away row
+            let liveGameAwayRow    = $("<div>");                                          // begin live away row
             liveGameAwayRow.addClass("row card-body");
-            let awayTeamLogo      = $("<img>")
-            awayTeamLogo.addClass("col-1 card-img");
-            awayTeamLogo.attr("src", gameEl.awayTeamLogo)
+            let liveAwayTeamLogo      = $("<img>")
+            liveAwayTeamLogo.addClass("col-1 card-img");
+            liveAwayTeamLogo.attr("src", gameEl.awayTeamLogo)
                         .attr("id", "awayTeamLogoLive");
+            console.log(gameEl.awayTeamLogo);
             let awayTeamName      = $("<div>");
             awayTeamName.addClass("col-4");
             awayTeamName.text(gameEl.awayFullName);
@@ -732,13 +734,13 @@ let NLWinnerArr        = [];
 
             // render live score card html 
             liveGameCard.append(liveGameAwayRow);
-            liveGameAwayRow.append(awayTeamLogo, awayTeamName, liveInfoDivAway, emptyDiv);
+            liveGameAwayRow.append(liveAwayTeamLogo, awayTeamName, liveInfoDivAway, emptyDiv);
             liveInfoDivAway.append(liveInfoConAway);
             liveInfoConAway.append(liveInfoRowAway);
             liveInfoRowAway.append(liveAwayScore,liveChannel);
 
             liveGameCard.append(liveGameHomeRow);
-            liveGameHomeRow.append(homeTeamLogo, homeTeamName, liveInfoDiv, liveGameBtn);
+            liveGameHomeRow.append(liveHomeTeamLogo, homeTeamName, liveInfoDiv, liveGameBtn);
 
         });
     };
@@ -750,6 +752,7 @@ let NLWinnerArr        = [];
         inProgressArr.forEach(function(gameEl) {
             if (parseInt(gameID) === gameEl.gameID) {
                 $("#homeTeamLogoLive").attr("src", gameEl.homeTeamLogo);
+                console.log(gameEl.homeTeamLogo);
                 $("#homeTeamSpreadLive").text(gameEl.homePointSpread);
                 $("#homeTeamSpreadOddsLive").text(gameEl.homePointSpreadPayout);
                 $("#homeTeamMLLive").text(gameEl.liveHomeMoneyLine);

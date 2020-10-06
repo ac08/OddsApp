@@ -92,11 +92,15 @@ body {
     background-color: rgba(248, 248, 248, 0.808);
 }
 
-.preGameCard:nth-child(odd) {
+.preGameCard {
     background-color: rgba(231, 224, 224, 0.76);
 }
 
-.liveGameCard:nth-child(even) {
+.liveGameCard {
     background-color: rgba(127, 224, 175, 0.329);
+}
+
+.completeGameCard {
+    background-color: rgba(66, 98, 240, 0.479);
 }
 
