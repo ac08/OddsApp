@@ -1,6 +1,6 @@
 $(document).ready(function() {
 // SportsData.io API Key 
-let sportDataApiKey         = "?key=d2ff51fd95464aa7b5d2588142bd4ab4"; // Nancy
+let sportDataApiKey         = "?key=38534c7cb0a84f93bd3f73dae90bf57d"; // Andrew2
 
 // SportsData.io API - Endpoint URLs
 let gameDate                = moment().format("YYYY-MM-DD"); 
@@ -11,7 +11,7 @@ let playerDate              = moment().format("YYYY-MMM-DD");
 let bettingFuturesMarketURL = "https://api.sportsdata.io/v3/mlb/odds/json/BettingFuturesBySeason/2020POST" + sportDataApiKey
 let gamesOddsByDateURL      = "https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/" + gameDate + sportDataApiKey;
 let boxScoresByDateURL      = "https://api.sportsdata.io/v3/mlb/stats/json/BoxScores/" + boxScoreDate + sportDataApiKey;
-let teamsURL                = "https://api.sportsdata.io/v3/mlb/scores/json/teams" + sportDataApiKey;
+// let teamsURL                = "https://api.sportsdata.io/v3/mlb/scores/json/teams" + sportDataApiKey;
 let playerStatsByDate       = "https://api.sportsdata.io/v3/mlb/stats/json/PlayerGameStatsByDate/" + playerDate + sportDataApiKey
 let stadiumURL              = "https://api.sportsdata.io/v3/mlb/scores/json/Stadiums" + sportDataApiKey;
 let liveGameOddsURL         = "https://api.sportsdata.io/v3/mlb/odds/json/LiveGameOddsByDate/" + LiveGameOddsDate + sportDataApiKey;
@@ -41,12 +41,6 @@ let NLWinnerArr        = [];
             } else return
         });
 
-        // Name of Betting Market Type - Can be placed on #worldSeriesWinnerOdds
-        if (WSBettingMarketArr[0]) {
-            let WSWinner = WSBettingMarketArr[0].BettingBetType;
-            $('#worldSeriesWinnerOdds').text(WSWinner);
-        } else return
-
         // Configure Array for World Series Odds at DraftKings sportsbook (Id=7)
         let draftKingsWSOddsArr  = [];
         // Loop through Array for World Series Odds and push "line" to World Series Odds at DraftKings sportsbook Array (above)
@@ -74,13 +68,13 @@ let NLWinnerArr        = [];
         // Create list-item for teamName
         let listItem  = $("<p>");
         // Add classes to list-item
-        listItem.addClass("list-group-item d-flex justify-content-between align-items-center pregame border border-danger");
+        listItem.addClass("list-group-item d-flex justify-content-between align-items-center");
         // Set text of list-item to teamName
         listItem.text(teamName);
         // Create list-item-span for odds
         let listItemSpan = $("<span>");
         // Add classes to list-item-spand
-        listItemSpan.addClass("badge badge-danger");
+        listItemSpan.addClass("badge badge-dark");
         // Set text of list-item-span to odds
         listItemSpan.text(WSodds); 
         // Append listItem to listGroup and listSpan to listItem
@@ -104,12 +98,6 @@ let NLWinnerArr        = [];
                 };
             } else return
         });
-
-        // Name of Betting Market Type - Can be placed on #ALWinnerOdds
-        if (ALBettingMarketArr[0]) {
-            let ALWinner = ALBettingMarketArr[0].BettingBetType;
-            $('#ALWinnerOdds').text(ALWinner);
-        } else return
 
         // Configure Array for AL Winner Odds at DraftKings sportsbook (Id=7)
         let draftKingsAmLgOddsArr  = [];
@@ -138,13 +126,13 @@ let NLWinnerArr        = [];
         // Create list-item for teamName
         let listItem  = $("<p>");
         // Add classes to list-item
-        listItem.addClass("list-group-item d-flex justify-content-between align-items-center pregame  border border-danger");
+        listItem.addClass("list-group-item d-flex justify-content-between align-items-center");
         // Set text of list-item to teamName
         listItem.text(teamName);
         // Create list-item-span for odds
         let listItemSpan = $("<span>");
         // Add classes to list-item-spand
-        listItemSpan.addClass("badge badge-danger");
+        listItemSpan.addClass("badge badge-dark");
         // Set text of list-item-span to odds
         listItemSpan.text(ALodds); 
         // Append listItem to listGroup and listSpan to listItem
@@ -168,12 +156,6 @@ let NLWinnerArr        = [];
                 };
             } else return
         });
-
-        // Name of Betting Market Type - Can be placed on #NLWinnerOdds
-        if (NLBettingMarketArr[0]) {
-            let NLWinner = NLBettingMarketArr[0].BettingBetType;
-            $('#NLWinnerOdds').text(NLWinner);
-        } else return
 
         // Configure Array for NL Winner Odds at DraftKings sportsbook (Id=7)
         let draftKingsNtLgOddsArr = [];
@@ -201,13 +183,13 @@ let NLWinnerArr        = [];
         // Create list-item for teamName
         let listItem  = $("<p>");
         // Add classes to list-item
-        listItem.addClass("list-group-item d-flex justify-content-between align-items-center pregame border border-danger");
+        listItem.addClass("list-group-item d-flex justify-content-between align-items-center");
         // Set text of list-item to teamName
         listItem.text(teamName);
         // Create list-item-span for odds
         let listItemSpan = $("<span>");
         // Add classes to list-item-spand
-        listItemSpan.addClass("badge badge-danger");
+        listItemSpan.addClass("badge badge-dark");
         // Set text of list-item-span to odds
         listItemSpan.text(NLodds);
         // Append listItem to listGroup and listSpan to listItem
@@ -239,7 +221,7 @@ let NLWinnerArr        = [];
             // generate h5 tag
             let headlineEl = $("<h5>");
             // add classes to h5 tag
-            headlineEl.addClass("text-bold text-body mb-1 headline");
+            headlineEl.addClass("text-bold text-body mb-1");
             // set h5 tag text to headline property in looping newsElement
             headlineEl.text(newsEl.headline);
             // insert h5 after contentEl 
@@ -366,39 +348,151 @@ let NLWinnerArr        = [];
         });
 
             // ajaxCall to teamsURL to GET Team logo link (svg) and add to either inProgressArr, scheduledArr, completedArr; match on homeTeamID and awayTeamID as defined in *Arr
-            $.ajax({
-                "async": false,
-                url: teamsURL,
-                method: "GET"
-            }).done(function(response) {
-                response.forEach(function(teamsEl) {
-                    let teamID = teamsEl.TeamID;
+            // $.ajax({
+            //     "async": false,
+            //     url: teamsURL,
+            //     method: "GET"
+            // }).done(function(response) {
+            //     response.forEach(function(teamsEl) {
+            //         let teamID = teamsEl.TeamID;
+
+            //         inProgressArr.forEach(function(gameEl){
+            //             if (gameEl.homeTeamID === teamID) {
+            //                 gameEl.homeTeamLogo = teamsEl.Logo
+            //             } else if (gameEl.awayTeamID === teamID) {
+            //                 gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
+            //             };
+            //         });
+
+            //         scheduledArr.forEach(function(gameEl){
+            //             if (gameEl.homeTeamID === teamID) {
+            //                 gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl
+            //             } else if (gameEl.awayTeamID === teamID) {
+            //                 gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
+            //             };
+            //         });
+
+            //         completedArr.forEach(function(gameEl){
+            //             if (gameEl.homeTeamID === teamID) {
+            //                 gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl
+            //             } else if (gameEl.awayTeamID === teamID) {
+            //                 gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
+            //             };
+            //         });
+            //     });
+            // });
+
+            function teamLogo() {
+                let icons = [
+                    {
+                        teamID: 1,
+                        key: "LAD",
+                        name: "Los Angeles Dodgers",
+                        primaryColor:   "005A9C",
+                        pecondaryColor: "FFFFFF",
+                        tertiaryColor:  "EF3E42",
+                        logo: "https://cdn.worldvectorlogo.com/logos/los-angeles-dodgers-3.svg"
+                    },
+                    {
+                        teamID: 11,
+                        key: "TB",
+                        name: "Tampa Bay Rays",
+                        primaryColor:   "092C5C",
+                        secondaryColor: "8FBCE6",
+                        tertiaryColor:  "F5D130",
+                        logo: "https://cdn.worldvectorlogo.com/logos/tampa-bay-devil-rays-3.svg"
+                    },
+                    {
+                        teamID: 22,
+                        key: "MIA",
+                        name: "Miami Marlins",
+                        primaryColor:   "000000",
+                        secondaryColor: "FF6600",
+                        tertiaryColor:  "0077C8",
+                        logo: "https://cdn.worldvectorlogo.com/logos/miami-marlins-primary-logo-on-light.svg"
+                    },
+                    {
+                        teamID: 24,
+                        key: "OAK",
+                        name: "Oakland Athletics",
+                        primaryColor:   "003831",
+                        secondaryColor: "EFB21E",
+                        tertiaryColor:  "FFFFFF",
+                        logo: "https://cdn.worldvectorlogo.com/logos/oakland-athletics-5.svg"
+                    },
+                    {
+                        teamID: 26,
+                        key: "ATL",
+                        name: "Atlanta Braves",
+                        primaryColor:   "13274F",
+                        secondaryColor: "CE1141",
+                        tertiaryColor:  "FFFFFF",
+                        logo: "https://cdn.worldvectorlogo.com/logos/atlanta-braves-2.svg"
+                    },
+                    {
+                        teamID: 29,
+                        key: "NYY",
+                        name: "New York Yankees",
+                        primaryColor:   "132448",
+                        secondaryColor: "C4CED4",
+                        tertiaryColor:  "FFFFFF",
+                        logo: "https://cdn.worldvectorlogo.com/logos/new-york-yankees-1.svg"
+                    },
+                    {
+                        teamID: 30,
+                        key: "HOU",
+                        name: "Houston Astros",
+                        primaryColor:   "002D62",
+                        secondaryColor: "EB6E1F",
+                        tertiaryColor:  "FFFFFF",
+                        logo: "https://cdn.worldvectorlogo.com/logos/houston-astros-7.svg"
+                    },
+                    {
+                        teamID: 33,
+                        key: "SD",
+                        name: "San Diego Padres",
+                        primaryColor:   "05143F",
+                        secondaryColor: "FFFFFF",
+                        tertiaryColor:  "",
+                        logo: "https://cdn.worldvectorlogo.com/logos/san-diego-padres-2.svg"
+                    }
+                ];
+                icons.forEach(function(teamsEl){
+                    let teamID = teamsEl.teamID;
 
                     inProgressArr.forEach(function(gameEl){
                         if (gameEl.homeTeamID === teamID) {
-                            gameEl.homeTeamLogo = teamsEl.Logo
+                            gameEl.homeTeamLogo = teamsEl.logo,
+                            gameEl.homeFullName = teamsEl.name
                         } else if (gameEl.awayTeamID === teamID) {
-                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
+                            gameEl.awayTeamLogo = teamsEl.logo,
+                            gameEl.awayFullName = teamsEl.name
                         };
                     });
-
+    
                     scheduledArr.forEach(function(gameEl){
                         if (gameEl.homeTeamID === teamID) {
-                            gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl
+                            gameEl.homeTeamLogo = teamsEl.logo
+                            gameEl.homeFullName = teamsEl.name
                         } else if (gameEl.awayTeamID === teamID) {
-                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
+                            gameEl.awayTeamLogo = teamsEl.logo,
+                            gameEl.awayFullName = teamsEl.name
                         };
                     });
-
+    
                     completedArr.forEach(function(gameEl){
                         if (gameEl.homeTeamID === teamID) {
-                            gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl
+                            gameEl.homeTeamLogo = teamsEl.logo,
+                            gameEl.homeFullName = teamsEl.name
                         } else if (gameEl.awayTeamID === teamID) {
-                            gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
+                            gameEl.awayTeamLogo = teamsEl.logo,
+                            gameEl.awayFullName = teamsEl.name
                         };
                     });
-                });
-            });
+                });  
+            };
+            
+            teamLogo();
 
                 // ajaxCall to stadiumURL to GET Stadium properties and add to scheduledArr; match on stadiumID as defined it scheduledArr - - - not working for me
                 $.ajax({
@@ -483,21 +577,21 @@ let NLWinnerArr        = [];
     function loadPreGameCards() {
         scheduledArr.forEach(function(gameEl) {
             let futuresMarketDiv  = $("#futuresMarket");
-            let preGameCard       = $("<div>");                            // begin pre-game score card
-            preGameCard.addClass("container-fluid text-center my-4 border border-danger");
+            let preGameCard       = $("<div>");                                              // begin pre-game score card
+            preGameCard.addClass("container-fluid text-center card");
             preGameCard.attr("id", gameEl.gameID);
             
             
-            let preGameAwayRow    = $("<div>");                            // begin pre-game away row
-            preGameAwayRow.addClass("row pregame");
+            let preGameAwayRow    = $("<div>");                                              // begin pre-game away row
+            preGameAwayRow.addClass("row card-body");
             preGameCard.append(preGameAwayRow);
             let awayTeamLogo      = $("<img>")
-            awayTeamLogo.addClass("col-1");
+            awayTeamLogo.addClass("col-1 card-img");
             awayTeamLogo.attr("src", gameEl.awayTeamLogo)
                         .attr("id", "awayTeamLogo");
             let awayTeamName      = $("<div>");
             awayTeamName.addClass("col-4");
-            awayTeamName.text(gameEl.awayTeamName);
+            awayTeamName.text(gameEl.awayFullName);
 
             let location          = $("<div>");
             location.addClass("col-6");
@@ -511,30 +605,22 @@ let NLWinnerArr        = [];
             preGameAwayRow.append(awayTeamLogo, awayTeamName, location, channel);
 
             
-            let preGameHomeRow    = $("<div>");                            // begin pre-game home row
-            preGameHomeRow.addClass("row pregame");
+            let preGameHomeRow    = $("<div>");                                                 // begin pre-game home row
+            preGameHomeRow.addClass("row card-body");
             preGameCard.append(preGameHomeRow);
             let homeTeamLogo      = $("<img>")
-            homeTeamLogo.addClass("col-1");
+            homeTeamLogo.addClass("col-1 card-img");
             homeTeamLogo.attr("src", gameEl.homeTeamLogo)
                         .attr("id", "homeTeamLogo");
             let homeTeamName      = $("<div>");
             homeTeamName.addClass("col-4");
-            homeTeamName.text(gameEl.homeTeamName);
+            homeTeamName.text(gameEl.homeFullName);
             let gameTime          = $("<div>");
             gameTime.addClass("col-6");
-            
-            // date conversion here 
-            gameTime.text(
-
-                moment(gameEl.dateTime).format('MMMM Do YYYY, h:mm a')
-
-            );
-
-
+            gameTime.text(moment(gameEl.dateTime).format('MMMM Do YYYY, h:mm a'));
 
             let preGameBtn        = $("<i>");
-            preGameBtn.addClass("col-1 preGameModalBtn fa fa-info-circle my-auto")           // add preGameModalBtn class for on-click function
+            preGameBtn.addClass("col-1 preGameModalBtn fas fa-baseball-ball my-auto")           // add preGameModalBtn class for on-click function
                       .attr("data-toggle", "modal")
                       .attr("data-target", "#pre-game-modal")
                       .attr("id", gameEl.gameID);
@@ -577,17 +663,17 @@ let NLWinnerArr        = [];
         inProgressArr.forEach(function(gameEl) {
             let futuresMarketDiv   = $("#futuresMarket");
             let liveGameCard       = $("<div>");                            // begin live score card
-            liveGameCard.addClass("container-fluid text-center my-4 border border-danger");
+            liveGameCard.addClass("container-fluid text-center card");
             liveGameCard.attr("id", gameEl.gameID);
             let liveGameHomeRow    = $("<div>");                            // begin live home row
-            liveGameHomeRow.addClass("row pregame");
+            liveGameHomeRow.addClass("row card-body");
             let homeTeamLogo      = $("<img>")
-            homeTeamLogo.addClass("col-1");
+            homeTeamLogo.addClass("col-1 card-img");
             homeTeamLogo.attr("src", gameEl.homeTeamLogo)
                         .attr("id", "homeTeamLogoLive");
             let homeTeamName      = $("<div>");
             homeTeamName.addClass("col-4");
-            homeTeamName.text(gameEl.homeTeamName);
+            homeTeamName.text(gameEl.homeFullName);
 
             let liveInfoDiv = $("<div>");
             liveInfoDiv.addClass("col-6");
@@ -607,25 +693,24 @@ let NLWinnerArr        = [];
             liveInfoRow.append(liveHomeScore, liveInning);
 
             let liveGameBtn = $("<i>");
-            liveGameBtn.addClass("col-1 liveGameModalBtn fa fa-info-circle my-auto")                   // add liveGameModalBtn class for on-click function
+            liveGameBtn.addClass("col-1 liveGameModalBtn fas fa-baseball-ball my-auto")                   // add liveGameModalBtn class for on-click function
                         .attr("data-toggle", "modal") 
                         .attr("data-target", "#live-game-modal")
                         .attr("id", gameEl.gameID);
 
             liveGameCard.insertAfter(futuresMarketDiv);
-            liveGameCard.append(liveGameHomeRow);
-            liveGameHomeRow.append(homeTeamLogo, homeTeamName, liveInfoDiv, liveGameBtn);
+
 
 
             let liveGameAwayRow    = $("<div>");                                                      // begin live away row
-            liveGameAwayRow.addClass("row pregame mt-2");
+            liveGameAwayRow.addClass("row card-body");
             let awayTeamLogo      = $("<img>")
-            awayTeamLogo.addClass("col-1");
+            awayTeamLogo.addClass("col-1 card-img");
             awayTeamLogo.attr("src", gameEl.awayTeamLogo)
                         .attr("id", "awayTeamLogoLive");
             let awayTeamName      = $("<div>");
             awayTeamName.addClass("col-4");
-            awayTeamName.text(gameEl.awayTeamName);
+            awayTeamName.text(gameEl.awayFullName);
 
             let liveInfoDivAway = $("<div>");
             liveInfoDivAway.addClass("col-6");
@@ -645,11 +730,15 @@ let NLWinnerArr        = [];
             let emptyDiv = $("<div>");
             emptyDiv.addClass("col-1");
 
+            // render live score card html 
             liveGameCard.append(liveGameAwayRow);
             liveGameAwayRow.append(awayTeamLogo, awayTeamName, liveInfoDivAway, emptyDiv);
             liveInfoDivAway.append(liveInfoConAway);
             liveInfoConAway.append(liveInfoRowAway);
             liveInfoRowAway.append(liveAwayScore,liveChannel);
+
+            liveGameCard.append(liveGameHomeRow);
+            liveGameHomeRow.append(homeTeamLogo, homeTeamName, liveInfoDiv, liveGameBtn);
 
         });
     };
@@ -678,19 +767,19 @@ let NLWinnerArr        = [];
         completedArr.forEach(function(gameEl) {
             let futuresMarketDiv     = $("#futuresMarket");
             let completeGameCard     = $("<div>");
-            completeGameCard.addClass("container-fluid text-center my-4 border border-danger");
+            completeGameCard.addClass("container-fluid text-center card my-4 border");
             completeGameCard.attr("id", gameEl.gameID);
             completeGameCard.insertAfter(futuresMarketDiv);
 
             let completeGameAwayRow  = $("<div>");
-            completeGameAwayRow.addClass("row pregame");
+            completeGameAwayRow.addClass("row card-body");
             let awayTeamLogo         = $("<img>");
+            awayTeamLogo.addClass("col-1 card-img");
             awayTeamLogo.attr("src", gameEl.awayTeamLogo)
                         .attr("id", "awayTeamLogo");
-            awayTeamLogo.addClass("col-1");
             let awayTeamName         = $("<div>");
             awayTeamName.addClass("col-4");
-            awayTeamName.text(gameEl.awayTeamName);
+            awayTeamName.text(gameEl.awayFullName);
             let awayFnScore          = $("<div>");
             awayFnScore.addClass("col-2");
             awayFnScore.text(gameEl.awayFnScore);
@@ -702,14 +791,14 @@ let NLWinnerArr        = [];
 
 
             let completeGameHomeRow = $("<div>");
-            completeGameHomeRow.addClass("row pregame mt-2");
+            completeGameHomeRow.addClass("row card-body");
             let homeTeamLogo        = $("<img>");
+            homeTeamLogo.addClass("col-1 card-img");
             homeTeamLogo.attr("src", gameEl.homeTeamLogo)
                         .attr("id", "homeTeamLogo");
-            homeTeamLogo.addClass("col-1");
             let homeTeamName        = $("<div>");
             homeTeamName.addClass("col-4");
-            homeTeamName.text(gameEl.homeTeamName);
+            homeTeamName.text(gameEl.homeFullName);
             let homeFnScore         = $("<div>");
             homeFnScore.addClass("col-2");
             homeFnScore.text(gameEl.homeFnScore);
@@ -737,5 +826,22 @@ let NLWinnerArr        = [];
     };
 
     loadCompleteGameCards();
+
+    function newsFeedDates() {
+        let today        = moment().format('dddd');
+        let yesterday    = moment().subtract(1, 'day').format('dddd');
+        let twoDaysAgo   = moment().subtract(2, 'day').format('dddd');
+        let threeDaysAgo = moment().subtract(3, 'day').format('dddd');
+        let fourDaysAgo  = moment().subtract(4, 'day').format('dddd');
+        $("#today").text(today);
+        $("#yesterday").text(yesterday);
+        $("#twoDaysAgo").text(twoDaysAgo);
+        $("#threeDaysAgo").text(threeDaysAgo);
+        $("#fourDaysAgo").text(fourDaysAgo);
+
+
+    };
+
+    newsFeedDates();
 
 });
