@@ -27,22 +27,72 @@
 }
 
 #homeTeamLogo {
-    max-width: 25px;
-    max-height: 25px;
-    border-radius: 3px;
+    max-width: 30px;
+    max-height: 30px;
+    border-radius: 8px;
 }
 
 #awayTeamLogo {
-    max-width: 25px;
-    max-height: 25px;
+    max-width: 30px;
+    max-height: 30px;
+    border-radius: 8px;
 }
 
 #homeTeamLogoPre {
-    max-width: 25px;
-    max-height: 25px;
+    max-width: 30px;
+    max-height: 30px;
+    margin: auto;
+    border-radius: 8px;
 }
 
 #awayTeamLogoPre {
-    max-width: 25px;
-    max-height: 25px;
+    max-width: 30px;
+    max-height: 30px;
+    margin: auto;
+    border-radius: 8px;
+}
+
+
+#homeTeamLogoLive {
+    max-width: 30px;
+    max-height: 30px;
+    margin: auto;
+    border-radius: 8px;
+}
+
+#awayTeamLogoLive {
+    max-width: 30px;
+    max-height: 30px;
+    margin: auto;
+    border-radius: 8px;
+}
+
+body {
+    background: url("icons/baseball.jpg") no-repeat center center; 
+    height: 100%;
+    background-size: cover;
+}
+
+.pregame {
+    background-color: navy;
+    color: white;
+    justify-content: right;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+.news {
+    background: url("icons/playoffs.jpg") no-repeat center center; 
+    background-size: cover;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    padding-left: 2em;
+    padding-right: 2em;
+    color:black;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+} 
+
+.background {
+    background-color: whitesmoke;
 }

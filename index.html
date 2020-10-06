@@ -27,16 +27,16 @@
     > 
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container background">
         <div id="futuresMarket" class="container-fluid mb-1">
             <div class="row">
-                <button id="WorldSeriesBtn" class="btn btn-light border col-sm-4" type="button" data-toggle="collapse" data-target="#worldSeriesWinnerOdds" aria-expanded="false" aria-controls="collapse">
+                <button id="WorldSeriesBtn" class="btn btn-danger border col-sm-4" type="button" data-toggle="collapse" data-target="#worldSeriesWinnerOdds" aria-expanded="false" aria-controls="collapse">
                 World Series Odds 2020
                 </button>
-                <button id="ALWinnerBtn" class="btn btn-light border col-sm-4" type="button" data-toggle="collapse" data-target="#ALWinnerOdds" aria-expanded="false" aria-controls="collapse">
+                <button id="ALWinnerBtn" class="btn btn-danger border col-sm-4" type="button" data-toggle="collapse" data-target="#ALWinnerOdds" aria-expanded="false" aria-controls="collapse">
                 AL Winner 2020
                 </button> 
-                <button id="NLWinnerBtn" class="btn btn-light border col-sm-4" type="button" data-toggle="collapse" data-target="#NLWinnerOdds" aria-expanded="false" aria-controls="collapse">
+                <button id="NLWinnerBtn" class="btn btn-danger border col-sm-4" type="button" data-toggle="collapse" data-target="#NLWinnerOdds" aria-expanded="false" aria-controls="collapse">
                 NL Winner 2020
                 </button>
             </div>
@@ -48,12 +48,12 @@
         </div>
 
         <!-- News Feed -->
-        <div class="container-fluid mt-5">
+        <div class="container-fluid mt-5 news">
             <div class="row">
                 <div class="col-sm-2">
                     <div id="headlines" class="list-group">
-                        <a class="list-group-item list-group-item-light list-group-item-action active" href="#content-0">Current</a>
-                        <a class="list-group-item list-group-item-light list-group-item-action" href="#content-1">Yesterday</a>
+                        <a class="list-group-item list-group-item-primary list-group-item-action" href="#content-0">Current</a>
+                        <a class="list-group-item list-group-item-dark list-group-item-action" href="#content-1">Yesterday</a>
                         <a class="list-group-item list-group-item-light list-group-item-action" href="#content-2">Catchup</a>
                         <a class="list-group-item list-group-item-light list-group-item-action" href="#content-3">Catchup</a>
                         <a class="list-group-item list-group-item-light list-group-item-action" href="#content-4">Catchup</a>
@@ -76,12 +76,12 @@
     <div id="pre-game-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="pre-game-modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="container-fluid">
+                <div class="container-fluid pregame">
                     <div class="row modal-header border">
                         <h5 class="col-12 modal-title text-center border">Pre-Game Odds</h5>
                     </div>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pregame">
                     <div class="container-fluid">
                         <div class="row border mb-1">                                                       <!-- begin header row -->
                             <div class="col-1 border"></div>                                                <!-- end empty, spacer div -->
@@ -149,23 +149,22 @@
     <div id="live-game-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="pre-game-modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="container-fluid">
+                <div class="container-fluid pregame">
                     <div class="row modal-header border">
                         <h5 class="col-12 modal-title text-center border">Live-Game Odds</h5>
                     </div>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pregame">
                     <div class="container-fluid">
-                        <div class="row border mb-1">                                                   <!-- begin header row -->
+                        <div class="row border mb-1 text-center">                                                   <!-- begin header row -->
                             <div class="col-1 border"></div>                                            <!-- end empty, spacer div -->
-                            <div class="col-4 border">SPREAD</div>                                      <!-- end live game spread -->
-                            <div class="col-3 border">MONEYLINE</div>                                   <!-- end live money line -->
-                            <div class="col-4 border">TOTAL</div>                                       <!-- end live game total -->
+                            <div class="col-5 border">SPREAD</div>                                      <!-- end live game spread -->
+                            <div class="col-6 border">MONEYLINE</div>                                   <!-- end live money line -->
                         </div>                                                                          <!-- end header row -->
         
-                        <div class="row border mb-1">                                                   <!-- begin home/OVER details row -->
+                        <div class="row border mb-1 text-center">                                                   <!-- begin home/OVER details row -->
                             <img id="homeTeamLogoLive" class="col-1"></img>                             <!-- end home logo -->
-                            <div class="col-4">                                                         <!-- begin home spread box -->
+                            <div class="col-5">                                                         <!-- begin home spread box -->
                                 <div class="container-fluid">
                                     <div class="row border">                                            <!-- begin live home spread row -->            
                                         <div id="homeTeamSpreadLive" class="col-12"></div>              <!-- live home spread -->
@@ -175,42 +174,23 @@
                                     </div>                                                              <!-- end live home spread odds row -->
                                 </div>
                             </div>                                                                      <!-- end live home spread box -->
-                            <div id="homeTeamMLLive" class="col-3"></div>                               <!-- live home money line -->
-                            <div class="col-4">                                                         <!-- begin live OVER totals box  -->
-                                <div class="container-fluid">
-                                    <div class="row border">                                            <!-- begin live OVER totals row -->            
-                                        <div id="overTotalLive" class="col-12"></div>                   <!-- live OVER totals -->
-                                    </div>                                                              <!-- end live OVER totals row -->
-                                    <div class="row border">                                            <!-- begin live OVER totals odds row -->
-                                        <div id="overOddsLive" class="col-12"></div>                    <!-- live OVER totals odds -->
-                                    </div>                                                              <!-- end live OVER totals odds row -->
-                                </div>
-                            </div>                                                                      <!-- end live OVER totals box  -->
+                            <div id="homeTeamMLLive" class="col-6"></div>                               <!-- live home money line -->
+
                         </div>                                                                          <!-- end hlive ome/OVER details row  -->
 
-                        <div class="row border">                                                        <!-- begin live away/UNDER details row -->
+                        <div class="row border text-center">                                                        <!-- begin live away/UNDER details row -->
                             <img id="awayTeamLogoLive" class="col-1"></img>                             <!-- end away logo -->
-                            <div class="col-4">                                                         <!-- begin live away spread box -->
+                            <div class="col-5">                                                         <!-- begin live away spread box -->
                                 <div class="container-fluid">
                                     <div class="row border">                                            <!-- begin live away spread row -->            
-                                        <div id="awayTeamSpreadLive" class="col-12">+4.5</div>          <!-- live away spread -->
+                                        <div id="awayTeamSpreadLive" class="col-12"></div>              <!-- live away spread -->
                                     </div>                                                              <!-- end live away spread row -->
                                     <div class="row border">                                            <!-- begin live away spread odds row -->
-                                        <div id="awayTeamSpreadOddsLive" class="col-12">-150</div>      <!-- live away spread odds -->
+                                        <div id="awayTeamSpreadOddsLive" class="col-12"></div>          <!-- live away spread odds -->
                                     </div>                                                              <!-- end live away spread odds row -->
                                 </div>
                             </div>                                                                      <!-- end live away spread box -->
-                            <div id="awayTeamMLLive" class="col-3">+500</div>                           <!-- away live money line -->
-                            <div class="col-4">                                                         <!-- begin live UNDER totals box  -->
-                                <div class="container-fluid">
-                                    <div class="row border">                                            <!-- begin live UNDER totals row -->            
-                                        <div id="underTotalLive" class="col-12">U8.5</div>              <!-- live UNDER totals -->
-                                    </div>                                                              <!-- end live UNDER totals row -->
-                                    <div class="row border">                                            <!-- begin live UNDER totals odds row -->
-                                        <div id="underOddsLive" class="col-12">+210</div>               <!-- live UNDER totals odds -->
-                                    </div>                                                              <!-- end live UNDER totals odds row -->
-                                </div>
-                            </div>                                                                      <!-- end live UNDER totals box  -->
+                            <div id="awayTeamMLLive" class="col-6"></div>                               <!-- away live money line -->
                         </div>                                                                          <!-- end live away/UNDER details row  -->
                     </div>                                                                              <!-- end live modal body container -->  
                 </div>                                                                                  <!-- end live modal body div -->
@@ -226,9 +206,10 @@
     <!-- scrollspy jQuery functionality per Bootstrap documentation -->
     <script> 
         $('[data-spy="scroll"]').each(function() {
-            let $spy = $(this).scrollspy('refresh')
+            let $spy = $(this).scrollspy('refresh');
         });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js" integrity="sha512-Izh34nqeeR7/nwthfeE0SI3c8uhFSnqxV0sI9TvTcXiFJkMd6fB644O64BRq2P/LA/+7eRvCw4GmLsXksyTHBg==" crossorigin="anonymous"></script>
     <script src="assets/logic.js"></script>
    
 
