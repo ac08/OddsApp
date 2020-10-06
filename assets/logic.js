@@ -578,7 +578,7 @@ let NLWinnerArr        = [];
         scheduledArr.forEach(function(gameEl) {
             let futuresMarketDiv  = $("#futuresMarket");
             let preGameCard       = $("<div>");                                              // begin pre-game score card
-            preGameCard.addClass("container-fluid text-center card");
+            preGameCard.addClass("container-fluid text-center card preGameCard");
             preGameCard.attr("id", gameEl.gameID);
             
             
@@ -663,7 +663,7 @@ let NLWinnerArr        = [];
         inProgressArr.forEach(function(gameEl) {
             let futuresMarketDiv   = $("#futuresMarket");
             let liveGameCard       = $("<div>");                            // begin live score card
-            liveGameCard.addClass("container-fluid text-center card");
+            liveGameCard.addClass("container-fluid text-center card liveGameCard");
             liveGameCard.attr("id", gameEl.gameID);
             let liveGameHomeRow    = $("<div>");                            // begin live home row
             liveGameHomeRow.addClass("row card-body");

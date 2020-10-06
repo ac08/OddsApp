@@ -53,7 +53,12 @@ You are required to submit the following:
 
 * The URL of the deployed application
 
+https://ac08.github.io/OddsApp/
+
+
 * The URL of the GitHub repository
+
+https://github.com/ac08/OddsApp
 
 
 
