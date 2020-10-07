@@ -2,8 +2,6 @@
 
 ## Presentation Requirements
 
-Use this [project presentation template](https://docs.google.com/presentation/d/1_u8TKy5zW5UlrVQVnyDEZ0unGI2tjQPDEpA0FNuBKAw/edit?usp=sharing) to address the following: 
-
 * Elevator pitch: (MLB) Odds App is a minimal, lightweight live scores and odds application built on the web. It utilizes several web-based technologies and the SportsData.io API (for MLB) to track Scheduled, InProgress, and Completed odds and scores for the MLB Playoffs 2020. 
 
 * Concept: A lightweight and clean (MLB) sports odds and live score web application.
@@ -48,6 +46,17 @@ https://github.com/ac08/OddsApp
 
 <!-- LiveGame Odds Modal -->
 <img src="assets/imgs/LiveGame Odds Modal.png" alt="livegame">
+
+## Screenshots of scheduled, inProgress, and completed games Arrays (of objects)
+
+<!-- scheduledArr -->
+<img src="assets/arrayFormats/scheduledArr.png" alt="scheduled array">
+
+<!-- inProgressArr -->
+<img src="assets/arrayFormats/inProgressArr.png" alt="in progress array">
+
+<!-- completedArr -->
+<img src="assets/arrayFormats/completedArr.png" alt="completed array">
 
 
 ## UI Design, Whiteboarding on Miro platform

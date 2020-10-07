@@ -568,12 +568,6 @@ let NLWinnerArr        = [];
                             });
     });
 
-    console.log(inProgressArr);
-    console.log(scheduledArr);
-    console.log(completedArr);
-
-
-
     function loadPreGameCards() {
         scheduledArr.forEach(function(gameEl) {
             let futuresMarketDiv  = $("#futuresMarket");
@@ -708,7 +702,6 @@ let NLWinnerArr        = [];
             liveAwayTeamLogo.addClass("col-1 card-img");
             liveAwayTeamLogo.attr("src", gameEl.awayTeamLogo)
                         .attr("id", "awayTeamLogoLive");
-            console.log(gameEl.awayTeamLogo);
             let awayTeamName      = $("<div>");
             awayTeamName.addClass("col-4 font-weight-bold");
             awayTeamName.text(gameEl.awayFullName);
@@ -751,7 +744,6 @@ let NLWinnerArr        = [];
         inProgressArr.forEach(function(gameEl) {
             if (parseInt(gameID) === gameEl.gameID) {
                 $("#homeTeamLogoLiveModal").attr("src", gameEl.homeTeamLogo);
-                console.log(gameEl.homeTeamLogo);
                 $("#homeTeamSpreadLive").text(gameEl.homePointSpread);
                 $("#homeTeamSpreadOddsLive").text(gameEl.homePointSpreadPayout);
                 $("#homeTeamMLLive").text(gameEl.liveHomeMoneyLine);
@@ -846,4 +838,7 @@ let NLWinnerArr        = [];
 
     newsFeedDates();
 
+    console.log(scheduledArr);
+    console.log(completedArr);
+    console.log(inProgressArr);
 });
