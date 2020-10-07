@@ -590,7 +590,7 @@ let NLWinnerArr        = [];
             awayTeamLogo.attr("src", gameEl.awayTeamLogo)
                         .attr("id", "awayTeamLogo");
             let awayTeamName      = $("<div>");
-            awayTeamName.addClass("col-4");
+            awayTeamName.addClass("col-4 font-weight-bold");
             awayTeamName.text(gameEl.awayFullName);
 
             let location          = $("<div>");
@@ -613,7 +613,7 @@ let NLWinnerArr        = [];
             homeTeamLogo.attr("src", gameEl.homeTeamLogo)
                         .attr("id", "homeTeamLogo");
             let homeTeamName      = $("<div>");
-            homeTeamName.addClass("col-4");
+            homeTeamName.addClass("col-4 font-weight-bold");
             homeTeamName.text(gameEl.homeFullName);
             let gameTime          = $("<div>");
             gameTime.addClass("col-6");
@@ -672,7 +672,7 @@ let NLWinnerArr        = [];
             liveHomeTeamLogo.attr("src", gameEl.homeTeamLogo)
                             .attr("id", "homeTeamLogoLive");
             let homeTeamName      = $("<div>");
-            homeTeamName.addClass("col-4");
+            homeTeamName.addClass("col-4 font-weight-bold");
             homeTeamName.text(gameEl.homeFullName);
 
             let liveInfoDiv = $("<div>");
@@ -710,7 +710,7 @@ let NLWinnerArr        = [];
                         .attr("id", "awayTeamLogoLive");
             console.log(gameEl.awayTeamLogo);
             let awayTeamName      = $("<div>");
-            awayTeamName.addClass("col-4");
+            awayTeamName.addClass("col-4 font-weight-bold");
             awayTeamName.text(gameEl.awayFullName);
 
             let liveInfoDivAway = $("<div>");
@@ -780,7 +780,7 @@ let NLWinnerArr        = [];
             awayTeamLogo.attr("src", gameEl.awayTeamLogo)
                         .attr("id", "awayTeamLogo");
             let awayTeamName         = $("<div>");
-            awayTeamName.addClass("col-4");
+            awayTeamName.addClass("col-4 font-weight-bold");
             awayTeamName.text(gameEl.awayFullName);
             let awayFnScore          = $("<div>");
             awayFnScore.addClass("col-2");
@@ -799,7 +799,7 @@ let NLWinnerArr        = [];
             homeTeamLogo.attr("src", gameEl.homeTeamLogo)
                         .attr("id", "homeTeamLogo");
             let homeTeamName        = $("<div>");
-            homeTeamName.addClass("col-4");
+            homeTeamName.addClass("col-4 font-weight-bold");
             homeTeamName.text(gameEl.homeFullName);
             let homeFnScore         = $("<div>");
             homeFnScore.addClass("col-2");

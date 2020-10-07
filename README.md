@@ -1,55 +1,26 @@
 # Project 1
 
-## Application Requirements
-
-* Must use at least two server-side APIs
-
-* Must use a CSS framework _other than_ Bootstrap
-
-* Must be interactive (i.e: accept and respond to user input)
-
-* Use at least one new third-party API
-
-* Must have a polished UI
-
-* Must meet good quality coding standards
-
-* Does not use alerts, confirms or prompts (look into _modals_)
-
-* Must be deployed to GitHub Pages
-
-
 ## Presentation Requirements
 
 Use this [project presentation template](https://docs.google.com/presentation/d/1_u8TKy5zW5UlrVQVnyDEZ0unGI2tjQPDEpA0FNuBKAw/edit?usp=sharing) to address the following: 
 
-* Elevator pitch: a one minute description of your application
+* Elevator pitch: (MLB) Odds App is a minimal, lightweight live scores and odds application built on the web. It utilizes several web-based technologies and the SportsData.io API (for MLB) to track Scheduled, InProgress, and Completed odds and scores for the MLB Playoffs 2020. 
 
-* Concept: What is your user story? What was your motivation for development?
+* Concept: A lightweight and clean (MLB) sports odds and live score web application.
 
-* Process: What were the technologies used? How were tasks and roles broken down and assigned? What challenges did you encounter? What were your successes?
+* Process: Technologies used, include: jQuery, Vanilla JavaScript, HTML, CSS, Bootstrap as well as the SportsData.io API for MLB scores and odds. 
 
-* Demo: Show your stuff!
+Disclaimer: SportsData.io Free MLB Trial allows access to almost their entire live scores and odds database. However, as a Free Trial, the odds and scores are not accurate, but the outcomes depicted are accurate. For example, in real life, Team A is leading Team B 5-2, the web application here may actually show Team A leading Team B 3-1. 
 
-* Directions for Future Development
+## Demo of the Application
 
-* Links to the deployed application and the GitHub repository
+* Demo of Futures Market Functionality on top of screen
 
-
-## Grading Metrics 
-
-| Metric        | Weight | 
-| ---           | ---    |
-| Concept       | 10%    |
-| Design        | 20%    |
-| Functionality | 30%    |
-| Collaboration | 30%    |
-| Presentation  | 10%    |
+https://drive.google.com/file/d/1u8Pcpcpz3qnYPloTvDpi2LdSGubHY7VH/view
 
 
-## Submission on BCS
 
-You are required to submit the following:
+## Access to the Application
 
 * The URL of the deployed application
 
@@ -61,4 +32,13 @@ https://ac08.github.io/OddsApp/
 https://github.com/ac08/OddsApp
 
 
+## Screenshots of the application during the Oct. 5th 2020 game slate.
 
+<!-- Game Slate - Completed (Blue), InProgress (Green), Scheduled (Grey) -->
+<img width="500" height="750" src="assets/imgs/GameSlate.png">
+
+<!-- PreGame Odds Modal -->
+<img width="500" height="750" src="assets/imgs/PreGame Odds Modal.png">
+
+<!-- LiveGame Odds Modal -->
+<img width="250" height="250" src="assets/imgs/LiveGame Odds Modal.png">
