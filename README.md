@@ -14,9 +14,15 @@ Disclaimer: SportsData.io Free MLB Trial allows access to almost their entire li
 
 ## Demo of the Application
 
-* Demo of Futures Market Functionality on top of screen
+* Demo of Pre-Game Odds
 
-https://drive.google.com/file/d/1u8Pcpcpz3qnYPloTvDpi2LdSGubHY7VH/view
+https://drive.google.com/file/d/1nIx4gyAJnFnE2IFyD7je3G-oalJVZqXO/view?usp=sharing
+
+* Demo of Live-Game Odds
+
+https://drive.google.com/file/d/1N71Jlp9yapH8nmgoLbV3XcLOpLTg2QKB/view?usp=sharing
+
+* Demo of Complete Game Layout
 
 
 
