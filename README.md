@@ -22,6 +22,7 @@ https://drive.google.com/file/d/1N71Jlp9yapH8nmgoLbV3XcLOpLTg2QKB/view?usp=shari
 
 * Demo of Complete Game Layout
 
+https://drive.google.com/file/d/1aW60EkOy9D9qTpi4IYdp5zb1q9mb352c/view
 
 
 ## Access to the Application
