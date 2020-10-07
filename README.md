@@ -35,10 +35,10 @@ https://github.com/ac08/OddsApp
 ## Screenshots of the application during the Oct. 5th 2020 game slate.
 
 <!-- Game Slate - Completed (Blue), InProgress (Green), Scheduled (Grey) -->
-<img width="500" height="750" src="assets/imgs/GameSlate.png">
+<img src="assets/imgs/GameSlate.png">
 
 <!-- PreGame Odds Modal -->
-<img width="500" height="750" src="assets/imgs/PreGame Odds Modal.png">
+<img src="assets/imgs/PreGame Odds Modal.png">
 
 <!-- LiveGame Odds Modal -->
-<img width="250" height="250" src="assets/imgs/LiveGame Odds Modal.png">
+<img src="assets/imgs/LiveGame Odds Modal.png">
