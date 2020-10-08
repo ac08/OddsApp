@@ -1,6 +1,6 @@
 $(document).ready(function() {
 // SportsData.io API Key 
-let sportDataApiKey         = "?key=38534c7cb0a84f93bd3f73dae90bf57d"; // Andrew2
+let sportDataApiKey         = "?key=38534c7cb0a84f93bd3f73dae90bf57d"; 
 
 // SportsData.io API - Endpoint URLs
 let gameDate                = moment().format("YYYY-MM-DD"); 
@@ -11,7 +11,6 @@ let playerDate              = moment().format("YYYY-MMM-DD");
 let bettingFuturesMarketURL = "https://api.sportsdata.io/v3/mlb/odds/json/BettingFuturesBySeason/2020POST" + sportDataApiKey
 let gamesOddsByDateURL      = "https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/" + gameDate + sportDataApiKey;
 let boxScoresByDateURL      = "https://api.sportsdata.io/v3/mlb/stats/json/BoxScores/" + boxScoreDate + sportDataApiKey;
-// let teamsURL                = "https://api.sportsdata.io/v3/mlb/scores/json/teams" + sportDataApiKey;
 let playerStatsByDate       = "https://api.sportsdata.io/v3/mlb/stats/json/PlayerGameStatsByDate/" + playerDate + sportDataApiKey
 let stadiumURL              = "https://api.sportsdata.io/v3/mlb/scores/json/Stadiums" + sportDataApiKey;
 let liveGameOddsURL         = "https://api.sportsdata.io/v3/mlb/odds/json/LiveGameOddsByDate/" + LiveGameOddsDate + sportDataApiKey;
@@ -346,41 +345,6 @@ let NLWinnerArr        = [];
                 });
             });
         });
-
-            // ajaxCall to teamsURL to GET Team logo link (svg) and add to either inProgressArr, scheduledArr, completedArr; match on homeTeamID and awayTeamID as defined in *Arr
-            // $.ajax({
-            //     "async": false,
-            //     url: teamsURL,
-            //     method: "GET"
-            // }).done(function(response) {
-            //     response.forEach(function(teamsEl) {
-            //         let teamID = teamsEl.TeamID;
-
-            //         inProgressArr.forEach(function(gameEl){
-            //             if (gameEl.homeTeamID === teamID) {
-            //                 gameEl.homeTeamLogo = teamsEl.Logo
-            //             } else if (gameEl.awayTeamID === teamID) {
-            //                 gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
-            //             };
-            //         });
-
-            //         scheduledArr.forEach(function(gameEl){
-            //             if (gameEl.homeTeamID === teamID) {
-            //                 gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl
-            //             } else if (gameEl.awayTeamID === teamID) {
-            //                 gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
-            //             };
-            //         });
-
-            //         completedArr.forEach(function(gameEl){
-            //             if (gameEl.homeTeamID === teamID) {
-            //                 gameEl.homeTeamLogo = teamsEl.WikipediaWordMarkUrl
-            //             } else if (gameEl.awayTeamID === teamID) {
-            //                 gameEl.awayTeamLogo = teamsEl.WikipediaWordMarkUrl
-            //             };
-            //         });
-            //     });
-            // });
 
             function teamLogo() {
                 let icons = [
@@ -757,11 +721,23 @@ let NLWinnerArr        = [];
         });
     });
 
+    function displayPitchers() {
+        let winningPitcher = gameEl.winningPitcherName;
+        let losingPitcher  = gameEl.losingPitcherName;
+        if (awayFnScore > homeFnScore) {
+            $("#pitcherOne").text(winningPitcher + " (W)");
+            $("#pitcherTwo").text(losingPitcher + " (L)");
+        } else {
+            $("#pitcherTwo").text(losingPitcher + " (L)");
+            $("#pitcherOne").text(winningPitcher+ " (W)");
+        }
+    };
+
     function loadCompleteGameCards() {
         completedArr.forEach(function(gameEl) {
             let futuresMarketDiv     = $("#futuresMarket");
             let completeGameCard     = $("<div>");
-            completeGameCard.addClass("container-fluid text-center card my-4 border completeGameCard");
+            completeGameCard.addClass("container-fluid text-center card my-3 border completeGameCard");
             completeGameCard.attr("id", gameEl.gameID);
             completeGameCard.insertAfter(futuresMarketDiv);
 
@@ -802,18 +778,6 @@ let NLWinnerArr        = [];
 
             completeGameCard.append(completeGameHomeRow.append(homeTeamLogo, homeTeamName, homeFnScore, pitcherTwo));
 
-            function displayPitchers() {
-                let winningPitcher = gameEl.winningPitcherName;
-                let losingPitcher  = gameEl.losingPitcherName;
-                if (awayFnScore > homeFnScore) {
-                    $("#pitcherOne").text(winningPitcher + " (W)");
-                    $("#pitcherTwo").text(losingPitcher + " (L)");
-                } else {
-                    $("#pitcherTwo").text(losingPitcher + " (L)");
-                    $("#pitcherOne").text(winningPitcher+ " (W)");
-                }
-            };
-
             displayPitchers();
 
         });
@@ -838,7 +802,4 @@ let NLWinnerArr        = [];
 
     newsFeedDates();
 
-    console.log(scheduledArr);
-    console.log(completedArr);
-    console.log(inProgressArr);
 });
