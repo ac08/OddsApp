@@ -26,7 +26,7 @@
     padding: 10px;
 }
 
-#homeTeamLogo {
+#homeTeamLogoComplete {
     background: transparent;
     border: 1px solid grey;
     max-width: 30px;
@@ -36,7 +36,7 @@
     border-radius: 8px;
 }
 
-#awayTeamLogo {
+#awayTeamLogoComplete {
     background: transparent;
     border: 1px solid grey;
     max-width: 30px;
@@ -57,6 +57,26 @@
 }
 
 #awayTeamLogoPre {
+    background: transparent;
+    border: 1px solid grey;
+    max-width: 30px;
+    max-height: 30px;
+    margin: auto;
+    padding: 2px;
+    border-radius: 8px;
+}
+
+#homeTeamLogoPreModal {
+    background: transparent;
+    border: 1px solid grey;
+    max-width: 30px;
+    max-height: 30px;
+    margin: auto;
+    padding: 2px;
+    border-radius: 8px;
+}
+
+#awayTeamLogoPreModal {
     background: transparent;
     border: 1px solid grey;
     max-width: 30px;

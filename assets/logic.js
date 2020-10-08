@@ -373,7 +373,7 @@ let NLWinnerArr        = [];
                         primaryColor:   "000000",
                         secondaryColor: "FF6600",
                         tertiaryColor:  "0077C8",
-                        logo: "https://cdn.worldvectorlogo.com/logos/miami-marlins-primary-logo-on-light.svg"
+                        logo: "https://cdn.worldvectorlogo.com/logos/florida-marlins-1.svg"
                     },
                     {
                         teamID: 24,
@@ -546,7 +546,7 @@ let NLWinnerArr        = [];
             let awayTeamLogo      = $("<img>")
             awayTeamLogo.addClass("col-1 card-img");
             awayTeamLogo.attr("src", gameEl.awayTeamLogo)
-                        .attr("id", "awayTeamLogo");
+                        .attr("id", "awayTeamLogoPre");
             let awayTeamName      = $("<div>");
             awayTeamName.addClass("col-4 font-weight-bold");
             awayTeamName.text(gameEl.awayFullName);
@@ -569,7 +569,7 @@ let NLWinnerArr        = [];
             let homeTeamLogo      = $("<img>")
             homeTeamLogo.addClass("col-1 card-img");
             homeTeamLogo.attr("src", gameEl.homeTeamLogo)
-                        .attr("id", "homeTeamLogo");
+                        .attr("id", "homeTeamLogoPre");
             let homeTeamName      = $("<div>");
             homeTeamName.addClass("col-4 font-weight-bold");
             homeTeamName.text(gameEl.homeFullName);
@@ -596,7 +596,7 @@ let NLWinnerArr        = [];
         let gameID = $(this).attr("id");
         scheduledArr.forEach(function(gameEl) {
             if (parseInt(gameID) === gameEl.gameID) {
-                $("#homeTeamLogoPre").attr("src", gameEl.homeTeamLogo);
+                $("#homeTeamLogoPreModal").attr("src", gameEl.homeTeamLogo);
                 $("#homeTeamSpreadPre").text(gameEl.homePointSpread);
                 $("#homeTeamSpreadOddsPre").text(gameEl.homePointSpreadOdds);
 
@@ -604,7 +604,7 @@ let NLWinnerArr        = [];
                 $("#overTotalPre").text("O" + gameEl.overUnder);
                 $("#overMLPre").text(gameEl.overOdds);
 
-                $("#awayTeamLogoPre").attr("src", gameEl.awayTeamLogo);
+                $("#awayTeamLogoPreModal").attr("src", gameEl.awayTeamLogo);
                 $("#awayTeamSpreadPre").text(gameEl.awayPointSpread);
                 $("#awayTeamSpreadOddsPre").text(gameEl.awayPointSpreadOdds);
 
@@ -746,7 +746,7 @@ let NLWinnerArr        = [];
             let awayTeamLogo         = $("<img>");
             awayTeamLogo.addClass("col-1 card-img");
             awayTeamLogo.attr("src", gameEl.awayTeamLogo)
-                        .attr("id", "awayTeamLogo");
+                        .attr("id", "awayTeamLogoComplete");
             let awayTeamName         = $("<div>");
             awayTeamName.addClass("col-4 font-weight-bold");
             awayTeamName.text(gameEl.awayFullName);
@@ -765,7 +765,7 @@ let NLWinnerArr        = [];
             let homeTeamLogo        = $("<img>");
             homeTeamLogo.addClass("col-1 card-img");
             homeTeamLogo.attr("src", gameEl.homeTeamLogo)
-                        .attr("id", "homeTeamLogo");
+                        .attr("id", "homeTeamLogoComplete");
             let homeTeamName        = $("<div>");
             homeTeamName.addClass("col-4 font-weight-bold");
             homeTeamName.text(gameEl.homeFullName);
