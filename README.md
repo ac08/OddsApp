@@ -1,4 +1,4 @@
-# Project 1
+# Creative Odds (MLB)
 
 ## Presentation Requirements
 
@@ -9,6 +9,8 @@
 * Process: Technologies used, include: jQuery, Vanilla JavaScript, HTML, CSS, Bootstrap as well as the SportsData.io API for MLB scores and odds. 
 
 Disclaimer: SportsData.io Free MLB Trial allows access to almost their entire live scores and odds database. However, as a Free Trial, the odds and scores are not accurate, but the outcomes depicted are accurate. For example, in real life, Team A is leading Team B 5-2, the web application here may actually show Team A leading Team B 3-1. 
+
+Only fully functional during active MLB season.
 
 ## Demo of the Application
 
@@ -29,12 +31,12 @@ https://drive.google.com/file/d/1aW60EkOy9D9qTpi4IYdp5zb1q9mb352c/view
 
 * The URL of the deployed application
 
-https://ac08.github.io/OddsApp/
+https://andrewcircelli.github.io/CreativeOdds/
 
 
 * The URL of the GitHub repository
 
-https://github.com/ac08/OddsApp
+https://github.com/andrewcircelli/CreativeOdds
 
 
 ## Screenshots of the application during the Oct. 5th 2020 game slate.
